@@ -1,6 +1,6 @@
 import { Table } from 'antd';
-import { columns } from './model/consts/consts';
 import { MainTableDataType } from 'shared/consts/MainTableData';
+import { columns } from './model/consts/consts';
 
 type MainTableProps = {
   dataSource: MainTableDataType[];
