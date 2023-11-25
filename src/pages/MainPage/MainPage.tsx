@@ -1,4 +1,4 @@
-import { MainTable } from 'components/MainTable/MainTable';
+import { MainTable } from 'ui/MainTable/MainTable';
 import { dataSource } from 'mock/mainTableData';
 import './MainPage.scss';
 import { useTableDataSource } from './hooks/useTableData';

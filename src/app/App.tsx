@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 import { MainPage } from 'pages/MainPage/MainPage';
 import { ProductPage } from 'pages/ProductPage/ProductPage';
-import { Header } from 'components/Header/Header';
-import { Footer } from 'components/Footer/Footer';
+import { Header } from 'ui/Header/Header';
+import { Footer } from 'ui/Footer/Footer';
 
 export const App = () => {
   return (
