@@ -11,6 +11,7 @@
     },
 
     /* Bundler mode */
+    "esModuleInterop": true,
     "moduleResolution": "Node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
