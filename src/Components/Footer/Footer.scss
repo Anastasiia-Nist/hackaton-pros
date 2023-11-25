@@ -1,0 +1,10 @@
+.footer {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f2f2f2;
+  &__copywriter {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
