@@ -1,6 +1,7 @@
 @mixin main-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1440px;
   margin: 0 auto;
   flex-grow: 1;
+  background-color: $color-main;
 }

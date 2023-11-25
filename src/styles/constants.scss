@@ -1,5 +1,8 @@
-$font-main: 'Roboto', sans-serif;
+%font-main {
+  font-family: 'DIN Pro', Arial, sans-serif;
+}
 
 $color-main: #fff;
-$color-main-darker: #000;
-$color-main-darkest: #000;
+$color-main-dark: #000;
+
+$color-bg-white: #f4f4f5;
