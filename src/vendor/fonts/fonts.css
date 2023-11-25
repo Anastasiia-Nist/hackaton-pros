@@ -1,0 +1,27 @@
+/* DIN Pro - 400 */
+@font-face {
+  font-family: 'DIN Pro';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    url('./DINPro.eot'),
+    url('./DINPro.eot?#iefix') format('embedded-opentype'),
+    url('./DINPro.woff2') format('woff2'),
+    url('./DINPro.woff') format('woff'),
+    url('./DINPro.ttf') format('truetype');
+}
+
+/* DIN Pro - 600 */
+@font-face {
+  font-family: 'DIN Pro';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src:
+    url('./DINPro-Medium.eot'),
+    url('./DINPro-Medium.eot?#iefix') format('embedded-opentype'),
+    url('./DINPro-Medium.woff2') format('woff2'),
+    url('./DINPro-Medium.woff') format('woff'),
+    url('./DINPro-Medium.ttf') format('truetype');
+}

@@ -1,8 +1,12 @@
 @import 'vendor/normalize.css';
+@import 'vendor/fonts/fonts.css';
+@import './styles/constants.scss';
 
 #root {
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  @extend %font-main;
+  background-color: $color-bg-white;
 }
