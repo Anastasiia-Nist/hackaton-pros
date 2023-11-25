@@ -7,12 +7,12 @@
     "skipLibCheck": true,
     "baseUrl": "./src",
     "paths": {
-      "*": ["*", "./*"]
+      "*": ["./*"]
     },
 
     /* Bundler mode */
-    "esModuleInterop": true,
     "moduleResolution": "Node",
+    "esModuleInterop": true,
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -25,6 +25,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["./src/**/*"],
+  "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
