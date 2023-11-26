@@ -1,25 +1,13 @@
-import { Form, type FormInstance } from 'antd';
-import { useState, useEffect } from 'react';
+import { type FormInstance } from 'antd';
 import { Button } from 'antd';
+import { useSubmittable } from './hooks/useSubmittable';
 
 type SubmitButtonProps = {
   form: FormInstance;
 };
 
 export const SubmitButton = ({ form }: SubmitButtonProps) => {
-  const [isSubmittable, setIsSubmittable] = useState(false);
-  const values = Form.useWatch([], form);
-
-  useEffect(() => {
-    form.validateFields({ validateOnly: true }).then(
-      () => {
-        setIsSubmittable(true);
-      },
-      () => {
-        setIsSubmittable(false);
-      },
-    );
-  }, [values, form]);
+  const isSubmittable = useSubmittable({ form });
 
   return (
     <Button type="primary" htmlType="submit" disabled={!isSubmittable}>

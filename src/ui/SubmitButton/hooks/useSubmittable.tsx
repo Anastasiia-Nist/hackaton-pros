@@ -14,11 +14,7 @@ export const useSubmittable = ({ form }: { form: FormInstance }): boolean => {
         setIsSubmittable(false);
       },
     );
-  }, [values]);
-
-  useEffect(() => {
-    console.log(isSubmittable);
-  }, [isSubmittable]);
+  }, [values, form]);
 
   return isSubmittable;
 };
