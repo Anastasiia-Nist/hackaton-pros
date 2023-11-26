@@ -4,6 +4,7 @@ import { ProductPage } from 'pages/ProductPage/ProductPage';
 import { Header } from 'ui/Header/Header';
 import { Footer } from 'ui/Footer/Footer';
 import { RegistrationPopup } from 'ui/RegistrationPopup/RegistrationPopup';
+import { LoginPopup } from 'ui/LoginPopup/LoginPopup';
 
 export const App = () => {
   return (
@@ -16,6 +17,7 @@ export const App = () => {
       <Footer />
 
       <RegistrationPopup />
+      <LoginPopup />
     </>
   );
 };
