@@ -3,6 +3,7 @@ import { MainPage } from 'pages/MainPage/MainPage';
 import { ProductPage } from 'pages/ProductPage/ProductPage';
 import { Header } from 'ui/Header/Header';
 import { Footer } from 'ui/Footer/Footer';
+import { RegistrationPopup } from 'ui/RegistrationPopup/RegistrationPopup';
 
 export const App = () => {
   return (
@@ -13,6 +14,8 @@ export const App = () => {
         <Route path="/product" element={<ProductPage />} />
       </Routes>
       <Footer />
+
+      <RegistrationPopup />
     </>
   );
 };
