@@ -107,7 +107,7 @@ export const FilterContent = () => {
           </Col>
 
           <Col>
-            <Form.Item label="Статус разметки" name="date">
+            <Form.Item label="Дата" name="date">
               <RangePicker
                 locale={locale}
                 value={[dayjs(dateRange?.dateFrom), dayjs(dateRange?.dateTo)]}
