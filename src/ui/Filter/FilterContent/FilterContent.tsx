@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { SearchOutlined } from '@ant-design/icons';
 import { Col, Form, Input, Row, Select, Space, DatePicker, Button } from 'antd';
@@ -13,9 +13,7 @@ import {
   resetMainTableFilter,
   setMainTableFilter,
 } from 'store/filters/filtersSlice';
-
-type EventValue<DateType> = DateType | null;
-type RangeValue<DateType> = [EventValue<DateType>, EventValue<DateType>] | null;
+import { RangeValue } from '../model/types';
 
 const { RangePicker } = DatePicker;
 
@@ -28,9 +26,11 @@ export const FilterContent = () => {
     dealer: dealerDefault,
   } = useSelector(mainTableFilterSelector);
 
+  const [form] = Form.useForm();
+
   const [name, setName] = useState(nameDefault);
   const [marked, setMarked] = useState(markedDefault);
-  const [dateRange, setDate] = useState<
+  const [dateRange, setDateRange] = useState<
     Record<string, string | undefined> | undefined
   >(dateRangeDefault);
   const [dealer, setDealer] = useState(dealerDefault);
@@ -45,8 +45,17 @@ export const FilterContent = () => {
     dealer: dealerDefault.value,
   };
 
+  const resetFieldsStates = useCallback(() => {
+    setName(nameDefault);
+    setMarked(markedDefault);
+    setDateRange(dateRangeDefault);
+    setDealer(dealerDefault);
+  }, [nameDefault, markedDefault, dateRangeDefault, dealerDefault]);
+
   const handleReset = () => {
     dispatch(resetMainTableFilter());
+    form.resetFields(Object.keys(initialValues));
+    resetFieldsStates();
   };
 
   const handleSubmit = () => {
@@ -62,7 +71,7 @@ export const FilterContent = () => {
   };
 
   const onDateRangeChange = (_: RangeValue<Dayjs>, dateStrings: string[]) => {
-    setDate({
+    setDateRange({
       dateFrom: dateStrings.at(0),
       dateTo: dateStrings.at(1),
     });
@@ -73,7 +82,7 @@ export const FilterContent = () => {
   };
 
   return (
-    <Form layout="vertical" initialValues={initialValues}>
+    <Form name="main-filter" layout="vertical" form={form}>
       <Row>
         <Space wrap>
           <Col>
@@ -81,6 +90,7 @@ export const FilterContent = () => {
               <Input
                 placeholder="Название содержит"
                 prefix={<SearchOutlined />}
+                value={name.value}
                 onChange={onNameChange}
               />
             </Form.Item>
@@ -90,6 +100,7 @@ export const FilterContent = () => {
               <Select
                 style={{ width: 140 }}
                 options={markedValues}
+                value={marked.value}
                 onChange={onMarkedChange}
               />
             </Form.Item>
@@ -97,7 +108,11 @@ export const FilterContent = () => {
 
           <Col>
             <Form.Item label="Статус разметки" name="date">
-              <RangePicker locale={locale} onChange={onDateRangeChange} />
+              <RangePicker
+                locale={locale}
+                value={[dayjs(dateRange?.dateFrom), dayjs(dateRange?.dateTo)]}
+                onChange={onDateRangeChange}
+              />
             </Form.Item>
           </Col>
           <Col>
@@ -105,6 +120,7 @@ export const FilterContent = () => {
               <Input
                 placeholder="Название дилера"
                 prefix={<SearchOutlined />}
+                value={dealer.value}
                 onChange={onDealerChange}
               />
             </Form.Item>
