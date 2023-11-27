@@ -1,7 +1,61 @@
+// Containers
+
 @mixin main-container {
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
   flex-grow: 1;
   background-color: $color-main;
+}
+
+@mixin clear-margin-padding {
+  margin: 0;
+  padding: 0;
+}
+
+@mixin main-wrapper {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+// Links
+
+@mixin link-hover {
+  transition: $link-hover-transition;
+
+  &:hover {
+    opacity: $link-hover-opacity;
+  }
+}
+
+// Popups
+
+@mixin popup-closed-state {
+  visibility: hidden;
+  opacity: 0;
+  transition: $visibility-transition;
+}
+
+@mixin popup-opened-state {
+  visibility: visible;
+  opacity: 1;
+  transition: $visibility-opened-transition;
+}
+
+// Typography
+
+@mixin accent-title-typography {
+  @extend %font-main;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+@mixin text-typography {
+  @extend %font-main;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.2;
 }

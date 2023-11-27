@@ -4,5 +4,21 @@
 
 $color-main: #fff;
 $color-main-dark: #000;
-
 $color-bg-white: #f4f4f5;
+
+// Popups
+
+$visibility-transition:
+  visibility 0s linear 0.3s,
+  opacity 0.3s;
+
+$visibility-opened-transition:
+  visibility 0s linear 0s,
+  opacity 0.3s;
+
+$color-background-padding: #1721445d;
+
+// Links
+
+$link-hover-opacity: 0.7;
+$link-hover-transition: 0.3s ease;
