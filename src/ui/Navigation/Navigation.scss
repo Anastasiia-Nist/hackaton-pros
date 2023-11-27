@@ -1,0 +1,18 @@
+@import '../../styles/constants.scss';
+
+#custom-nav {
+  justify-content: center;
+  margin: 15px 0;
+  border-radius: 12px;
+  text-transform: none;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 1.5px;
+
+  .ant-menu-submenu-title {
+    color: rgba(56, 164, 58, 1);
+  }
+  .ant-menu-item-selected {
+    color: rgba(56, 164, 58, 1);
+  }
+}
