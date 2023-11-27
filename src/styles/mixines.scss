@@ -13,6 +13,11 @@
   padding: 0;
 }
 
+@mixin main-wrapper {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 // Links
 
 @mixin link-hover {

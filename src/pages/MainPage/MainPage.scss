@@ -3,10 +3,19 @@
 
 .main-page {
   @include main-container;
+  padding-top: 40px;
   display: flex;
   flex-direction: column;
 
   &__main {
+    @include main-wrapper;
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__filter {
+    margin-left: auto;
   }
 }
