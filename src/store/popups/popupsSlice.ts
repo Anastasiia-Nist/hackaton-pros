@@ -5,6 +5,7 @@ export type PopupsState = Record<string, boolean>;
 const initialState: PopupsState = {
   isRegisterPopupOpen: false,
   isLoginPopupOpen: false,
+  isFilterOpened: false,
 };
 
 const popupsSlice = createSlice({
@@ -21,6 +22,9 @@ const popupsSlice = createSlice({
     },
     openLoginPopup(state: PopupsState) {
       state.isLoginPopupOpen = true;
+    },
+    openFilter(state: PopupsState) {
+      state.isFilterOpened = true;
     },
   },
 });

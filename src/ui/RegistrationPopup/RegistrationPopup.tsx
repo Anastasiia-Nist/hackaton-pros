@@ -1,7 +1,7 @@
 import { Form, Input } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { registerPopupSelector } from 'store/popupsSelectors';
-import { closeAllPopups } from 'store/popupsSlice';
+import { registerPopupSelector } from 'store/popups/popupsSelectors';
+import { closeAllPopups } from 'store/popups/popupsSlice';
 import { Popup } from 'ui/Popup/Popup';
 import { SubmitButton } from 'ui/SubmitButton/SubmitButton';
 
