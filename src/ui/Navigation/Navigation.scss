@@ -12,7 +12,13 @@
   .ant-menu-submenu-title {
     color: rgba(56, 164, 58, 1);
   }
-  .ant-menu-item-selected {
-    color: rgba(56, 164, 58, 1);
+  .ant-menu-submenu-selected::after {
+    border: none;
+  }
+}
+.ant-menu-light .ant-menu-item-selected, .ant-menu-light>.ant-menu .ant-menu-item-selected {
+  background-color: rgba(77, 214, 79, 0.2);
+  .ant-menu-title-content {
+    color: $color-main-dark;
   }
 }
