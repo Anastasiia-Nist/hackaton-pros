@@ -7,5 +7,5 @@ type MainTableProps = {
 };
 
 export const MainTable = ({ dataSource }: MainTableProps) => {
-  return <Table columns={columns} dataSource={dataSource} />;
+  return <Table columns={columns} dataSource={dataSource} pagination={false} />;
 };
