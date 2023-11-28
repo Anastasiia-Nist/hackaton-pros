@@ -16,7 +16,8 @@
     border: none;
   }
 }
-.ant-menu-light .ant-menu-item-selected, .ant-menu-light>.ant-menu .ant-menu-item-selected {
+.ant-menu-light .ant-menu-item-selected,
+.ant-menu-light > .ant-menu .ant-menu-item-selected {
   background-color: rgba(77, 214, 79, 0.2);
   .ant-menu-title-content {
     color: $color-main-dark;

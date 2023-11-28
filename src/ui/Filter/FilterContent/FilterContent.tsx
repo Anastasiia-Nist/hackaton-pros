@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { SearchOutlined } from '@ant-design/icons';
 import { Col, Form, Input, Row, Select, Space, DatePicker, Button } from 'antd';
@@ -34,16 +34,19 @@ export const FilterContent = () => {
     Record<string, string | undefined> | undefined
   >(dateRangeDefault);
   const [dealer, setDealer] = useState(dealerDefault);
+  const [isReset, setIsReset] = useState(false);
 
-  const initialValues = {
-    name: nameDefault.value,
-    marked: markedDefault.value,
-    date: [
-      dateRangeDefault.dateFrom ? dayjs(dateRangeDefault.dateFrom) : null,
-      dateRangeDefault.dateTo ? dayjs(dateRangeDefault.dateTo) : null,
-    ],
-    dealer: dealerDefault.value,
-  };
+  const initialValues = useMemo(() => {
+    return {
+      name: nameDefault.value,
+      marked: markedDefault.value,
+      date: [
+        dateRangeDefault.dateFrom ? dayjs(dateRangeDefault.dateFrom) : null,
+        dateRangeDefault.dateTo ? dayjs(dateRangeDefault.dateTo) : null,
+      ],
+      dealer: dealerDefault.value,
+    };
+  }, [nameDefault, markedDefault, dateRangeDefault, dealerDefault]);
 
   const resetFieldsStates = useCallback(() => {
     setName(nameDefault);
@@ -54,7 +57,9 @@ export const FilterContent = () => {
 
   const handleReset = () => {
     dispatch(resetMainTableFilter());
-    form.resetFields(Object.keys(initialValues));
+    form.resetFields();
+    setIsReset(true);
+    form.setFieldsValue(initialValues);
     resetFieldsStates();
   };
 
@@ -81,46 +86,50 @@ export const FilterContent = () => {
     setDealer({ value: event.target.value });
   };
 
+  useEffect(() => {
+    if (isReset) {
+      form.setFieldsValue(initialValues);
+      setIsReset(false);
+    }
+  }, [isReset, form, initialValues]);
+
+  useEffect(() => {
+    form.setFieldsValue(initialValues);
+  }, [form, initialValues]);
+
   return (
     <Form name="main-filter" layout="vertical" form={form}>
       <Row>
         <Space wrap>
           <Col>
-            <Form.Item label="Название" name="name">
+            <Form.Item label="Название" name="name" id="name">
               <Input
                 placeholder="Название содержит"
                 prefix={<SearchOutlined />}
-                value={name.value}
                 onChange={onNameChange}
               />
             </Form.Item>
           </Col>
           <Col>
-            <Form.Item label="Статус разметки" name="marked">
+            <Form.Item label="Статус разметки" name="marked" id="marked">
               <Select
                 style={{ width: 140 }}
                 options={markedValues}
-                value={marked.value}
                 onChange={onMarkedChange}
               />
             </Form.Item>
           </Col>
 
           <Col>
-            <Form.Item label="Дата" name="date">
-              <RangePicker
-                locale={locale}
-                value={[dayjs(dateRange?.dateFrom), dayjs(dateRange?.dateTo)]}
-                onChange={onDateRangeChange}
-              />
+            <Form.Item label="Статус разметки" name="date" id="date">
+              <RangePicker locale={locale} onChange={onDateRangeChange} />
             </Form.Item>
           </Col>
           <Col>
-            <Form.Item label="Дилер" name="dealer">
+            <Form.Item label="Дилер" name="dealer" id="dealer">
               <Input
                 placeholder="Название дилера"
                 prefix={<SearchOutlined />}
-                value={dealer.value}
                 onChange={onDealerChange}
               />
             </Form.Item>
