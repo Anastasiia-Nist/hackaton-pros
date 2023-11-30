@@ -1,8 +1,13 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
+import { Button, Menu } from 'antd';
+
 import './Navigation.scss';
+import { useAppDispatch } from 'store/store';
+import { openLoginPopup, openRegisterPopup } from 'store/popups/popupsSlice';
+import { useSelector } from 'react-redux';
+import { userSelector } from 'store/auth/authSelectors';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -39,6 +44,8 @@ const items: MenuProps['items'] = [
 const App: React.FC = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const isLoggedIn = !!useSelector(userSelector);
 
   const onClick: MenuProps['onClick'] = (e) => {
     console.log('click ', e);
@@ -46,15 +53,26 @@ const App: React.FC = () => {
   };
 
   return (
-    <Menu
-      id="custom-nav"
-      onClick={onClick}
-      style={{ width: 156 }}
-      defaultSelectedKeys={[pathname]}
-      mode="horizontal"
-      items={items}
-      triggerSubMenuAction={'click'}
-    />
+    <nav className="navigation">
+      {!isLoggedIn ? (
+        <>
+          <Button onClick={() => dispatch(openLoginPopup())}>Войти</Button>
+          <Button onClick={() => dispatch(openRegisterPopup())}>
+            Регистрация
+          </Button>
+        </>
+      ) : (
+        <Menu
+          id="custom-nav"
+          onClick={onClick}
+          style={{ width: 156 }}
+          defaultSelectedKeys={[pathname]}
+          mode="horizontal"
+          items={items}
+          triggerSubMenuAction={'click'}
+        />
+      )}
+    </nav>
   );
 };
 

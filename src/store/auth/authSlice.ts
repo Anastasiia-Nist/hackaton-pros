@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchUserByToken, loginUser, signupUser } from './authApi';
 
 export type User = {
   id: string;
@@ -39,52 +38,6 @@ const authSlice = createSlice({
     setUser(state, action) {
       state.user = action.payload.user;
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(signupUser.fulfilled, (state) => {
-      state.isFetching = false;
-      state.isError = false;
-      state.errorMessage = '';
-    });
-    builder.addCase(signupUser.pending, (state) => {
-      state.isFetching = true;
-    });
-    builder.addCase(signupUser.rejected, (state, { payload }) => {
-      state.isFetching = false;
-      state.isError = true;
-      console.log(payload);
-    });
-
-    builder.addCase(loginUser.fulfilled, (state, action) => {
-      state.token = action.payload.access_token;
-      state.isFetching = false;
-      state.isError = false;
-      state.isLoggedIn = true;
-      state.errorMessage = '';
-    });
-    builder.addCase(loginUser.pending, (state) => {
-      state.isFetching = true;
-    });
-    builder.addCase(loginUser.rejected, (state, action) => {
-      state.isFetching = false;
-      state.isError = true;
-      console.log(action.payload);
-    });
-
-    builder.addCase(fetchUserByToken.fulfilled, (state, action) => {
-      state.user = action.payload;
-      state.isFetching = false;
-      state.isError = false;
-      state.errorMessage = '';
-    });
-    builder.addCase(fetchUserByToken.pending, (state) => {
-      state.isFetching = true;
-    });
-    builder.addCase(fetchUserByToken.rejected, (state, action) => {
-      state.isFetching = false;
-      state.isError = true;
-      console.log(action.payload);
-    });
   },
 });
 

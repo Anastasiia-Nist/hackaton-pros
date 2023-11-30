@@ -1,28 +1,27 @@
 import { configureStore } from '@reduxjs/toolkit';
-import popupsSlice, { PopupsState } from './popups/popupsSlice';
-import filtersSlice, { FiltersState } from './filters/filtersSlice';
-import mainTablePagination, {
-  MainTablePagination,
-} from './mainTablePagination/mainTablePagination';
-import authSlice, { AuthState } from './auth/authSlice';
+import popupsSlice from './popups/popupsSlice';
+import filtersSlice from './filters/filtersSlice';
+import mainTablePagination from './mainTablePagination/mainTablePagination';
+import authSlice from './auth/authSlice';
 import { useDispatch } from 'react-redux';
-
-export type StateType = {
-  auth: AuthState;
-  popups: PopupsState;
-  filters: FiltersState;
-  mainTablePagination: MainTablePagination;
-};
+import { authApi } from './api/authApi';
+import { userApi } from './api/userApi';
 
 const store = configureStore({
   reducer: {
+    [authApi.reducerPath]: authApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
     auth: authSlice,
     popups: popupsSlice,
     filters: filtersSlice,
     mainTablePagination: mainTablePagination,
   },
+  devTools: process.env.NODE_ENV !== 'production',
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(authApi.middleware, userApi.middleware),
 });
 
+export type StateType = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 

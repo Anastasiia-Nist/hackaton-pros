@@ -1,5 +1,11 @@
 @import '../../styles/constants.scss';
 
+.navigation {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 #custom-nav {
   justify-content: center;
   margin: 15px 0;
