@@ -4,11 +4,11 @@ import { MainTableDataType } from 'ui/MainTable/model/types';
 export const columns: ColumnType<MainTableDataType>[] = [
   {
     title: 'Название',
-    dataIndex: 'product_name',
+    dataIndex: 'productName',
   },
   {
     title: 'Статус разметки',
-    dataIndex: 'is_marked',
+    dataIndex: 'markedStatus',
   },
   {
     title: 'Дата получения',

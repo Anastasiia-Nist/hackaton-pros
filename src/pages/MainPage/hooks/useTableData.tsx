@@ -10,6 +10,7 @@ import {
 } from 'store/mainTablePagination/mainTablePaginationSelectors';
 import { dealerPriceSelector } from 'store/dealerPrice/dealerPriceSelectors';
 import { MainTableDataType } from 'ui/MainTable/model/types';
+import { Link } from 'react-router-dom';
 
 export const useTableDataSource = (): MainTableDataType[] => {
   const [getDealerpriceAll] = useGetDealerpriceAllMutation();
@@ -27,6 +28,7 @@ export const useTableDataSource = (): MainTableDataType[] => {
   return dealerPrice.items.map((item: DealerPriceItem) => {
     return {
       ...item,
+      productName: <Link to={'/product'}>{item.product_name}</Link>,
       markedStatus: (
         <MarkedStatus
           isMarked={item.is_marked}
