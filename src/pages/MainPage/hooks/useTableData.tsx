@@ -11,8 +11,11 @@ import {
 import { dealerPriceSelector } from 'store/dealerPrice/dealerPriceSelectors';
 import { MainTableDataType } from 'ui/MainTable/model/types';
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from 'store/store';
+import { setProduct } from 'store/product/productSlice';
 
 export const useTableDataSource = (): MainTableDataType[] => {
+  const dispatch = useAppDispatch();
   const [getDealerpriceAll] = useGetDealerpriceAllMutation();
   const currentPage = useSelector(mainTableCurrentPageSelector);
   const pageSize = useSelector(mainTablePageSizeSelector);
@@ -25,10 +28,18 @@ export const useTableDataSource = (): MainTableDataType[] => {
     });
   }, [getDealerpriceAll, currentPage, pageSize]);
 
+  const handleProductClick = (product: DealerPriceItem) => {
+    dispatch(setProduct(product));
+  };
+
   return dealerPrice.items.map((item: DealerPriceItem) => {
     return {
       ...item,
-      productName: <Link to={'/product'}>{item.product_name}</Link>,
+      productName: (
+        <Link to={'/product'} onClick={() => handleProductClick(item)}>
+          {item.product_name}
+        </Link>
+      ),
       markedStatus: (
         <MarkedStatus
           isMarked={item.is_marked}

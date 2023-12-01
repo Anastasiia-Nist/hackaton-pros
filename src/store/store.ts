@@ -8,6 +8,7 @@ import dealerPriceSlice from './dealerPrice/dealerPriceSlice';
 import { authApi } from './api/authApi';
 import { userApi } from './api/userApi';
 import { dealerPriceApi } from './api/dealerPriceApi';
+import productSlice from './product/productSlice';
 
 const saveToLocalStorage = (state: StateType) => {
   try {
@@ -42,6 +43,7 @@ const store = configureStore({
     filters: filtersSlice,
     mainTablePagination: mainTablePagination,
     dealerPrice: dealerPriceSlice,
+    product: productSlice,
   },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>
