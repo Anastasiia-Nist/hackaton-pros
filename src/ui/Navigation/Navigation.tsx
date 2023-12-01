@@ -1,13 +1,10 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { ConfigProvider } from 'antd';
 import type { MenuProps } from 'antd';
-import { Button, Menu } from 'antd';
+import { Menu } from 'antd';
 
 import './Navigation.scss';
-import { useAppDispatch } from 'store/store';
-import { openLoginPopup, openRegisterPopup } from 'store/popups/popupsSlice';
-import { useSelector } from 'react-redux';
-import { userSelector } from 'store/auth/authSelectors';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -30,8 +27,7 @@ function getItem(
 const items: MenuProps['items'] = [
   getItem('Меню', 'menu', null, [
     getItem('На главную', '/'),
-    getItem('Продукты', '/product'),
-    getItem('Поиск', '/search'),
+    getItem('Статистика', '/statistics'),
     getItem('Профиль', 'profile', null, [
       getItem('Аккаунт', '/profile'),
       getItem('Выйти', '/logout'),
@@ -44,8 +40,6 @@ const items: MenuProps['items'] = [
 const App: React.FC = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const isLoggedIn = !!useSelector(userSelector);
 
   const onClick: MenuProps['onClick'] = (e) => {
     console.log('click ', e);
@@ -53,26 +47,23 @@ const App: React.FC = () => {
   };
 
   return (
-    <nav className="navigation">
-      {!isLoggedIn ? (
-        <>
-          <Button onClick={() => dispatch(openLoginPopup())}>Войти</Button>
-          <Button onClick={() => dispatch(openRegisterPopup())}>
-            Регистрация
-          </Button>
-        </>
-      ) : (
-        <Menu
-          id="custom-nav"
-          onClick={onClick}
-          style={{ width: 156 }}
-          defaultSelectedKeys={[pathname]}
-          mode="horizontal"
-          items={items}
-          triggerSubMenuAction={'click'}
-        />
-      )}
-    </nav>
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#00b959',
+        },
+      }}
+    >
+      <Menu
+        id="custom-nav"
+        onClick={onClick}
+        style={{ width: 156 }}
+        defaultSelectedKeys={[pathname]}
+        mode="horizontal"
+        items={items}
+        triggerSubMenuAction={'click'}
+      />
+    </ConfigProvider>
   );
 };
 
