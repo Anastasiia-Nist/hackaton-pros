@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { SearchOutlined } from '@ant-design/icons';
 import { Col, Form, Input, Row, Select, Space, DatePicker, Button } from 'antd';
@@ -13,9 +13,7 @@ import {
   resetMainTableFilter,
   setMainTableFilter,
 } from 'store/filters/filtersSlice';
-
-type EventValue<DateType> = DateType | null;
-type RangeValue<DateType> = [EventValue<DateType>, EventValue<DateType>] | null;
+import { RangeValue } from '../model/types';
 
 const { RangePicker } = DatePicker;
 
@@ -28,25 +26,41 @@ export const FilterContent = () => {
     dealer: dealerDefault,
   } = useSelector(mainTableFilterSelector);
 
+  const [form] = Form.useForm();
+
   const [name, setName] = useState(nameDefault);
   const [marked, setMarked] = useState(markedDefault);
-  const [dateRange, setDate] = useState<
+  const [dateRange, setDateRange] = useState<
     Record<string, string | undefined> | undefined
   >(dateRangeDefault);
   const [dealer, setDealer] = useState(dealerDefault);
+  const [isReset, setIsReset] = useState(false);
 
-  const initialValues = {
-    name: nameDefault.value,
-    marked: markedDefault.value,
-    date: [
-      dateRangeDefault.dateFrom ? dayjs(dateRangeDefault.dateFrom) : null,
-      dateRangeDefault.dateTo ? dayjs(dateRangeDefault.dateTo) : null,
-    ],
-    dealer: dealerDefault.value,
-  };
+  const initialValues = useMemo(() => {
+    return {
+      name: nameDefault.value,
+      marked: markedDefault.value,
+      date: [
+        dateRangeDefault.dateFrom ? dayjs(dateRangeDefault.dateFrom) : null,
+        dateRangeDefault.dateTo ? dayjs(dateRangeDefault.dateTo) : null,
+      ],
+      dealer: dealerDefault.value,
+    };
+  }, [nameDefault, markedDefault, dateRangeDefault, dealerDefault]);
+
+  const resetFieldsStates = useCallback(() => {
+    setName(nameDefault);
+    setMarked(markedDefault);
+    setDateRange(dateRangeDefault);
+    setDealer(dealerDefault);
+  }, [nameDefault, markedDefault, dateRangeDefault, dealerDefault]);
 
   const handleReset = () => {
     dispatch(resetMainTableFilter());
+    form.resetFields();
+    setIsReset(true);
+    form.setFieldsValue(initialValues);
+    resetFieldsStates();
   };
 
   const handleSubmit = () => {
@@ -62,7 +76,7 @@ export const FilterContent = () => {
   };
 
   const onDateRangeChange = (_: RangeValue<Dayjs>, dateStrings: string[]) => {
-    setDate({
+    setDateRange({
       dateFrom: dateStrings.at(0),
       dateTo: dateStrings.at(1),
     });
@@ -72,12 +86,23 @@ export const FilterContent = () => {
     setDealer({ value: event.target.value });
   };
 
+  useEffect(() => {
+    if (isReset) {
+      form.setFieldsValue(initialValues);
+      setIsReset(false);
+    }
+  }, [isReset, form, initialValues]);
+
+  useEffect(() => {
+    form.setFieldsValue(initialValues);
+  }, [form, initialValues]);
+
   return (
-    <Form layout="vertical" initialValues={initialValues}>
+    <Form name="main-filter" layout="vertical" form={form}>
       <Row>
         <Space wrap>
           <Col>
-            <Form.Item label="Название" name="name">
+            <Form.Item label="Название" name="name" id="name">
               <Input
                 placeholder="Название содержит"
                 prefix={<SearchOutlined />}
@@ -86,7 +111,7 @@ export const FilterContent = () => {
             </Form.Item>
           </Col>
           <Col>
-            <Form.Item label="Статус разметки" name="marked">
+            <Form.Item label="Статус разметки" name="marked" id="marked">
               <Select
                 style={{ width: 140 }}
                 options={markedValues}
@@ -96,12 +121,12 @@ export const FilterContent = () => {
           </Col>
 
           <Col>
-            <Form.Item label="Статус разметки" name="date">
+            <Form.Item label="Статус разметки" name="date" id="date">
               <RangePicker locale={locale} onChange={onDateRangeChange} />
             </Form.Item>
           </Col>
           <Col>
-            <Form.Item label="Дилер" name="dealer">
+            <Form.Item label="Дилер" name="dealer" id="dealer">
               <Input
                 placeholder="Название дилера"
                 prefix={<SearchOutlined />}

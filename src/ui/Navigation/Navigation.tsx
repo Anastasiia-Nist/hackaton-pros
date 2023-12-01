@@ -2,8 +2,13 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
+import { Button, Menu } from 'antd';
+
 import './Navigation.scss';
+import { useAppDispatch } from 'store/store';
+import { openLoginPopup, openRegisterPopup } from 'store/popups/popupsSlice';
+import { useSelector } from 'react-redux';
+import { userSelector } from 'store/auth/authSelectors';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -39,6 +44,8 @@ const items: MenuProps['items'] = [
 const App: React.FC = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const isLoggedIn = !!useSelector(userSelector);
 
   const onClick: MenuProps['onClick'] = (e) => {
     console.log('click ', e);
@@ -46,7 +53,6 @@ const App: React.FC = () => {
   };
 
   return (
-    <>
       <ConfigProvider
         theme={{
           token: {
@@ -64,7 +70,6 @@ const App: React.FC = () => {
           triggerSubMenuAction={'click'}
         />
       </ConfigProvider>
-    </>
   );
 };
 

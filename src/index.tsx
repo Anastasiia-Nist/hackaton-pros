@@ -5,12 +5,17 @@ import { Provider } from 'react-redux';
 import store from 'store/store';
 import { App } from './app/App';
 import './index.scss';
+import { ConfigProvider } from 'antd';
+
+import locale from 'antd/lib/locale/ru_RU';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <App />
+        <ConfigProvider locale={locale}>
+          <App />
+        </ConfigProvider>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,

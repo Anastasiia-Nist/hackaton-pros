@@ -4,6 +4,7 @@
 .main-page {
   @include main-container;
   padding-top: 40px;
+  padding-bottom: 20px;
   display: flex;
   flex-direction: column;
 
@@ -12,10 +13,23 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    gap: 20px;
   }
 
   &__filter {
     margin-left: auto;
+    margin-bottom: 20px;
+  }
+
+  &__table-controls {
+    min-height: 40px;
+    padding: 20px 20px 26px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    background-color: $color-main;
+    box-shadow: 0 -5px 8px -5px rgba(0, 0, 0, 0.1);
   }
 }
