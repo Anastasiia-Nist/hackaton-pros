@@ -31,7 +31,7 @@ export const authApi = createApi({
   endpoints: (build) => ({
     signupUser: build.mutation<User, SignupUser>({
       query: (body) => ({
-        url: '/auth/register',
+        url: 'auth/register',
         method: 'POST',
         body,
       }),
@@ -41,7 +41,7 @@ export const authApi = createApi({
       LoginUser
     >({
       query: (body) => ({
-        url: '/auth/jwt/login',
+        url: 'auth/jwt/login',
         method: 'POST',
         body,
       }),
@@ -56,7 +56,7 @@ export const authApi = createApi({
     }),
     logoutUser: build.mutation({
       query: () => ({
-        url: '/auth/jwt/logout',
+        url: 'auth/jwt/logout',
         method: 'POST',
       }),
     }),

@@ -1,0 +1,98 @@
+{
+  "dealerprice": {
+    "total": 1000,
+    "page": 1,
+    "pages": 1,
+    "size": 1,
+    "items": [
+      {
+        "id": 0,
+        "product_name": "Средство универсальное Prosept Universal Spray",
+        "is_marked": true,
+        "date": "2023-07-11",
+        "dealer_id": 2,
+        "product_key": "546227",
+        "price": "233.00",
+        "product_url": "ya.ru",
+        "dealer_name": "Heizenberg Store"
+      },
+      {
+        "id": 1,
+        "product_name": "Средство универсальное Prosept Universal Spray",
+        "is_marked": true,
+        "date": "2023-07-11",
+        "dealer_id": 2,
+        "product_key": "546227",
+        "price": "233.00",
+        "product_url": "ya.ru",
+        "dealer_name": "Heizenberg Store"
+      },
+      {
+        "id": 2,
+        "product_name": "Средство универсальное Prosept Universal Spray",
+        "is_marked": false,
+        "date": "2023-07-11",
+        "dealer_id": 2,
+        "product_key": "546227",
+        "price": "233.00",
+        "product_url": "ya.ru",
+        "dealer_name": "Heizenberg Store"
+      },
+      {
+        "id": 3,
+        "product_name": "Средство универсальное Prosept Universal Spray",
+        "is_marked": false,
+        "date": "2023-07-11",
+        "dealer_id": 2,
+        "product_key": "546227",
+        "price": "233.00",
+        "product_url": "ya.ru",
+        "dealer_name": "Heizenberg Store"
+      },
+      {
+        "id": 4,
+        "product_name": "Средство универсальное Prosept Universal Spray",
+        "is_marked": true,
+        "date": "2023-07-11",
+        "dealer_id": 2,
+        "product_key": "546227",
+        "price": "233.00",
+        "product_url": "ya.ru",
+        "dealer_name": "Heizenberg Store"
+      },
+      {
+        "id": 5,
+        "product_name": "Средство универсальное Prosept Universal Spray",
+        "is_marked": false,
+        "date": "2023-07-11",
+        "dealer_id": 2,
+        "product_key": "546227",
+        "price": "233.00",
+        "product_url": "ya.ru",
+        "dealer_name": "Heizenberg Store"
+      },
+      {
+        "id": 6,
+        "product_name": "Средство универсальное Prosept Universal Spray",
+        "is_marked": false,
+        "date": "2023-07-11",
+        "dealer_id": 2,
+        "product_key": "546227",
+        "price": "233.00",
+        "product_url": "ya.ru",
+        "dealer_name": "Heizenberg Store"
+      },
+      {
+        "id": 7,
+        "product_name": "Средство универсальное Prosept Universal Spray",
+        "is_marked": true,
+        "date": "2023-07-11",
+        "dealer_id": 2,
+        "product_key": "546227",
+        "price": "233.00",
+        "product_url": "ya.ru",
+        "dealer_name": "Heizenberg Store"
+      }
+    ]
+  }
+}

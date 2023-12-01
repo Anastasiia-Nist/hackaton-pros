@@ -1,6 +1,5 @@
 import { Pagination } from 'antd';
 import { MainTable } from 'ui/MainTable/MainTable';
-import { dataSource } from 'mock/mainTableData';
 import './MainPage.scss';
 import { useTableDataSource } from './hooks/useTableData';
 import { Filter } from 'ui/Filter/Filter';
@@ -16,11 +15,11 @@ import {
 } from 'store/mainTablePagination/mainTablePagination';
 
 export const MainPage = () => {
-  const tableDataSource = useTableDataSource({ dataSource });
   const dispatch = useDispatch();
   const currentPage = useSelector(mainTableCurrentPageSelector);
   const pageSize = useSelector(mainTablePageSizeSelector);
   const totalCount = useSelector(mainTableTotalCountSelector);
+  const dataSource = useTableDataSource();
 
   const handlePageChange = (page: number) => {
     if (page !== currentPage) {
@@ -37,7 +36,7 @@ export const MainPage = () => {
     <section className="main-page" aria-label="Главная страница">
       <main className="main-page__main">
         <Filter className="main-page__filter" />
-        <MainTable dataSource={tableDataSource} />
+        <MainTable dataSource={dataSource} />
         <div className="main-page__table-controls">
           <Pagination
             current={currentPage}

@@ -1,20 +1,14 @@
-import { Link } from 'react-router-dom';
+import { CheckCircleOutlined } from '@ant-design/icons';
 
 type MarkedStatus = {
   isMarked: boolean;
   routePath: string;
 };
 
-export const MarkedStatus = ({ isMarked, routePath }: MarkedStatus) => {
+export const MarkedStatus = ({ isMarked }: MarkedStatus) => {
   if (isMarked) {
-    return (
-      <span className="marked-status marked-status_marked">Размечено</span>
-    );
+    return <CheckCircleOutlined style={{ color: '#07c500' }} />;
   }
 
-  return (
-    <Link className="marked-status marked-status_type_link" to={routePath}>
-      Разметить
-    </Link>
-  );
+  return null;
 };
