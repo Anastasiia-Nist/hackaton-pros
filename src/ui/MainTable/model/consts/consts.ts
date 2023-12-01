@@ -1,14 +1,14 @@
 import type { ColumnType } from 'antd/es/table';
-import { MainTableDataType } from 'shared/consts/MainTableData';
+import { MainTableDataType } from 'ui/MainTable/model/types';
 
 export const columns: ColumnType<MainTableDataType>[] = [
   {
     title: 'Название',
-    dataIndex: 'name',
+    dataIndex: 'product_name',
   },
   {
     title: 'Статус разметки',
-    dataIndex: 'markedStatus',
+    dataIndex: 'is_marked',
   },
   {
     title: 'Дата получения',
@@ -16,11 +16,11 @@ export const columns: ColumnType<MainTableDataType>[] = [
   },
   {
     title: 'Дилер',
-    dataIndex: 'dealer',
+    dataIndex: 'dealer_id',
   },
   {
     title: 'Номер продукта',
-    dataIndex: 'productKey',
+    dataIndex: 'product_key',
   },
   {
     title: 'Цена',

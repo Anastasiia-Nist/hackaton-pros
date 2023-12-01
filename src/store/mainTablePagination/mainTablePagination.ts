@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { dealerPriceApi } from 'store/api/dealerPriceApi';
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'utils/constans';
 
 export type MainTablePagination = {
   currentPage: number;
@@ -7,9 +9,9 @@ export type MainTablePagination = {
 };
 
 const initialState: MainTablePagination = {
-  currentPage: 1,
-  pageSize: 20,
-  totalCount: 50,
+  currentPage: DEFAULT_PAGE,
+  pageSize: DEFAULT_PAGE_SIZE,
+  totalCount: 0,
 };
 
 const mainTablePaginationSlice = createSlice({
@@ -26,6 +28,21 @@ const mainTablePaginationSlice = createSlice({
     setMainTableTotalCount(state: MainTablePagination, action) {
       return { ...state, totalCount: action.payload };
     },
+  },
+
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      dealerPriceApi.endpoints.getDealerpriceAll.matchFulfilled,
+      (state, action) => {
+        state.totalCount = action.payload.total;
+      },
+    );
+    builder.addMatcher(
+      dealerPriceApi.endpoints.getDealerprice.matchFulfilled,
+      (state, action) => {
+        state.totalCount = action.payload.total;
+      },
+    );
   },
 });
 

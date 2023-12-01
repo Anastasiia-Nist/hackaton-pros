@@ -1,6 +1,3 @@
-// URL
-export const URL_BASE = 'http://localhost:3000';
-
 // ENDPOINTS
 export const ENDPOINT_ROOT = '/';
 export const ENDPOINT_SIGNUP = '/signup';
@@ -16,3 +13,7 @@ export const LOGIN_BAD_CREDENTIALS_TEXT = 'Неправильные учетны
 export const REGISTER_USER_ALREADY_EXISTS_TEXT = '400';
 export const VALIDATION_ERROR_TEXT = '422';
 export const UNKNOWN_ERROR_TEXT = 'Неизвестная ошибка';
+
+// Pagination
+export const DEFAULT_PAGE = 1;
+export const DEFAULT_PAGE_SIZE = 50;
