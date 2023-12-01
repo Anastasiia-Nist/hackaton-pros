@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { ConfigProvider } from 'antd';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import './Navigation.scss';
@@ -25,8 +26,7 @@ function getItem(
 const items: MenuProps['items'] = [
   getItem('Меню', 'menu', null, [
     getItem('На главную', '/'),
-    getItem('Продукты', '/product'),
-    getItem('Поиск', '/search'),
+    getItem('Статистика', '/statistics'),
     getItem('Профиль', 'profile', null, [
       getItem('Аккаунт', '/profile'),
       getItem('Выйти', '/logout'),
@@ -46,15 +46,25 @@ const App: React.FC = () => {
   };
 
   return (
-    <Menu
-      id="custom-nav"
-      onClick={onClick}
-      style={{ width: 156 }}
-      defaultSelectedKeys={[pathname]}
-      mode="horizontal"
-      items={items}
-      triggerSubMenuAction={'click'}
-    />
+    <>
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: '#00b959',
+          },
+        }}
+      >
+        <Menu
+          id="custom-nav"
+          onClick={onClick}
+          style={{ width: 156 }}
+          defaultSelectedKeys={[pathname]}
+          mode="horizontal"
+          items={items}
+          triggerSubMenuAction={'click'}
+        />
+      </ConfigProvider>
+    </>
   );
 };
 
