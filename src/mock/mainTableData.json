@@ -18,7 +18,7 @@
       },
       {
         "id": 1,
-        "product_name": "Средство универсальное Prosept Universal Spray",
+        "product_name": "Средство универсальное Prosept 1",
         "is_marked": true,
         "date": "2023-07-11",
         "dealer_id": 2,
@@ -29,7 +29,7 @@
       },
       {
         "id": 2,
-        "product_name": "Средство универсальное Prosept Universal Spray",
+        "product_name": "Средство универсальное 2",
         "is_marked": false,
         "date": "2023-07-11",
         "dealer_id": 2,
@@ -40,7 +40,7 @@
       },
       {
         "id": 3,
-        "product_name": "Средство универсальное Prosept Universal Spray",
+        "product_name": "Средство Prosept Spray",
         "is_marked": false,
         "date": "2023-07-11",
         "dealer_id": 2,
@@ -51,7 +51,7 @@
       },
       {
         "id": 4,
-        "product_name": "Средство универсальное Prosept Universal Spray",
+        "product_name": "Средство универсальное Spray",
         "is_marked": true,
         "date": "2023-07-11",
         "dealer_id": 2,
@@ -62,7 +62,7 @@
       },
       {
         "id": 5,
-        "product_name": "Средство универсальное Prosept Universal Spray",
+        "product_name": "Средство универсальное",
         "is_marked": false,
         "date": "2023-07-11",
         "dealer_id": 2,
@@ -73,7 +73,7 @@
       },
       {
         "id": 6,
-        "product_name": "Средство универсальное Prosept Universal Spray",
+        "product_name": "Средство 1",
         "is_marked": false,
         "date": "2023-07-11",
         "dealer_id": 2,
@@ -84,7 +84,7 @@
       },
       {
         "id": 7,
-        "product_name": "Средство универсальное Prosept Universal Spray",
+        "product_name": "Средство 345",
         "is_marked": true,
         "date": "2023-07-11",
         "dealer_id": 2,
@@ -94,5 +94,29 @@
         "dealer_name": "Heizenberg Store"
       }
     ]
+  },
+  "dealer": {
+    "items": [
+      {
+        "id": 1,
+        "name": "Heizenberg Store"
+      },
+      {
+        "id": 2,
+        "name": "Yandex Store"
+      },
+      {
+        "id": 3,
+        "name": "Test Store"
+      },
+      {
+        "id": 4,
+        "name": "Test Store 2"
+      }
+    ],
+    "total": 26,
+    "page": 1,
+    "pages": 1,
+    "size": 1
   }
 }
