@@ -82,10 +82,6 @@ export const FilterContent = () => {
     });
   };
 
-  const onDealerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDealer({ value: event.target.value });
-  };
-
   useEffect(() => {
     if (isReset) {
       form.setFieldsValue(initialValues);
@@ -121,17 +117,8 @@ export const FilterContent = () => {
           </Col>
 
           <Col>
-            <Form.Item label="Статус разметки" name="date" id="date">
+            <Form.Item label="Дата" name="date" id="date">
               <RangePicker locale={locale} onChange={onDateRangeChange} />
-            </Form.Item>
-          </Col>
-          <Col>
-            <Form.Item label="Дилер" name="dealer" id="dealer">
-              <Input
-                placeholder="Название дилера"
-                prefix={<SearchOutlined />}
-                onChange={onDealerChange}
-              />
             </Form.Item>
           </Col>
         </Space>

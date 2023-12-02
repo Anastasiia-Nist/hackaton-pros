@@ -1,5 +1,5 @@
 import { Table } from 'antd';
-import { MainTableDataType } from 'shared/consts/MainTableData';
+import { MainTableDataType } from './model/types';
 import { columns } from './model/consts/consts';
 
 type MainTableProps = {

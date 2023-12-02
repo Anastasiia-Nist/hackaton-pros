@@ -8,5 +8,16 @@
 
   &__main {
     flex-grow: 1;
+    align-items: center;
+    padding: 40px;
+  }
+  &__block-compare {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  &__product-info {
+    display: flex;
+    justify-content: space-between;
   }
 }
