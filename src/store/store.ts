@@ -9,6 +9,9 @@ import { authApi } from './api/authApi';
 import { userApi } from './api/userApi';
 import { dealerPriceApi } from './api/dealerPriceApi';
 import productSlice from './product/productSlice';
+import dealersSlice from './dealers/dealersSlice';
+import dealersPaginationSlice from './dealersPagination/dealersPaginationSlice';
+import { dealersApi } from './api/dealersApi';
 
 const saveToLocalStorage = (state: StateType) => {
   try {
@@ -38,10 +41,13 @@ const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [dealerPriceApi.reducerPath]: dealerPriceApi.reducer,
+    [dealersApi.reducerPath]: dealersApi.reducer,
     auth: authSlice,
     popups: popupsSlice,
     filters: filtersSlice,
     mainTablePagination: mainTablePagination,
+    dealersPagination: dealersPaginationSlice,
+    dealers: dealersSlice,
     dealerPrice: dealerPriceSlice,
     product: productSlice,
   },
@@ -51,6 +57,7 @@ const store = configureStore({
       authApi.middleware,
       userApi.middleware,
       dealerPriceApi.middleware,
+      dealersApi.middleware,
     ),
 });
 

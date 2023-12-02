@@ -1,25 +1,27 @@
-import { Pagination } from 'antd';
+import { Button, Pagination } from 'antd';
 import { MainTable } from 'ui/MainTable/MainTable';
 import './MainPage.scss';
 import { useTableDataSource } from './hooks/useTableData';
 import { Filter } from 'ui/Filter/Filter';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  mainTableCurrentPageSelector,
-  mainTablePageSizeSelector,
-  mainTableTotalCountSelector,
-} from 'store/mainTablePagination/mainTablePaginationSelectors';
+import { useSelector } from 'react-redux';
+import { mainTablePaginationSelector } from 'store/mainTablePagination/mainTablePaginationSelectors';
 import {
   setMainTableCurrentPage,
   setMainTablePageSize,
 } from 'store/mainTablePagination/mainTablePagination';
+import { DealersModal } from 'ui/DealersModal/DealersModal';
+import { useState } from 'react';
+import { useAppDispatch } from 'store/store';
+import { dealersSelector } from 'store/dealers/dealersSelectors';
 
 export const MainPage = () => {
-  const dispatch = useDispatch();
-  const currentPage = useSelector(mainTableCurrentPageSelector);
-  const pageSize = useSelector(mainTablePageSizeSelector);
-  const totalCount = useSelector(mainTableTotalCountSelector);
+  const [isDealersOpen, setIsDealersOpen] = useState(false);
+  const dispatch = useAppDispatch();
+  const { currentPage, pageSize, totalCount } = useSelector(
+    mainTablePaginationSelector,
+  );
   const dataSource = useTableDataSource();
+  const { currentDealer } = useSelector(dealersSelector);
 
   const handlePageChange = (page: number) => {
     if (page !== currentPage) {
@@ -35,9 +37,15 @@ export const MainPage = () => {
   return (
     <section className="main-page" aria-label="Главная страница">
       <main className="main-page__main">
-        <Filter className="main-page__filter" />
+        <div className="main-page__controls">
+          <Button onClick={() => setIsDealersOpen(true)}>Выбрать дилера</Button>
+          <Filter className="main-page__filter" />
+        </div>
+        <div className="main-page__dealer-label">
+          <p>Дилер: {currentDealer?.name || 'Не выбран'}</p>
+        </div>
         <MainTable dataSource={dataSource} />
-        <div className="main-page__table-controls">
+        <div className="main-page__pagination">
           <Pagination
             current={currentPage}
             onChange={handlePageChange}
@@ -48,6 +56,11 @@ export const MainPage = () => {
           />
         </div>
       </main>
+
+      <DealersModal
+        isOpen={isDealersOpen}
+        handleClose={() => setIsDealersOpen(false)}
+      />
     </section>
   );
 };

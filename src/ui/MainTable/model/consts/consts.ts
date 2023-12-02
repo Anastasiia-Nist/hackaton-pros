@@ -19,7 +19,7 @@ export const columns: ColumnType<MainTableDataType>[] = [
     dataIndex: 'dealer_id',
   },
   {
-    title: 'Номер продукта',
+    title: 'Артикул',
     dataIndex: 'product_key',
   },
   {

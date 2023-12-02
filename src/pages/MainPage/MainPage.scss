@@ -15,12 +15,17 @@
     flex-direction: column;
   }
 
-  &__filter {
-    margin-left: auto;
+  &__controls {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 20px;
   }
 
-  &__table-controls {
+  &__dealer-label {
+    margin-bottom: 20px;
+  }
+
+  &__pagination {
     min-height: 40px;
     margin-top: auto;
     padding: 20px 20px 26px;

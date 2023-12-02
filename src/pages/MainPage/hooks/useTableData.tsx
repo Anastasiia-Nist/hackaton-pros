@@ -1,32 +1,43 @@
 import { MarkedStatus } from 'ui/MarkedStatus/MarkedStatus';
 import { AppRoutes, RoutePath } from 'shared/config/routeConfig';
 import { DealerPriceItem } from 'store/dealerPrice/dealerPriceSlice';
-import { useGetDealerpriceAllMutation } from 'store/api/dealerPriceApi';
+import {
+  useGetDealerpriceAllMutation,
+  useGetDealerpriceMutation,
+} from 'store/api/dealerPriceApi';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  mainTableCurrentPageSelector,
-  mainTablePageSizeSelector,
-} from 'store/mainTablePagination/mainTablePaginationSelectors';
+import { mainTablePaginationSelector } from 'store/mainTablePagination/mainTablePaginationSelectors';
 import { dealerPriceSelector } from 'store/dealerPrice/dealerPriceSelectors';
 import { MainTableDataType } from 'ui/MainTable/model/types';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from 'store/store';
 import { setProduct } from 'store/product/productSlice';
+import { dealersSelector } from 'store/dealers/dealersSelectors';
 
 export const useTableDataSource = (): MainTableDataType[] => {
   const dispatch = useAppDispatch();
   const [getDealerpriceAll] = useGetDealerpriceAllMutation();
-  const currentPage = useSelector(mainTableCurrentPageSelector);
-  const pageSize = useSelector(mainTablePageSizeSelector);
+  const [getDealerPrice] = useGetDealerpriceMutation();
+  const { currentPage, pageSize } = useSelector(mainTablePaginationSelector);
   const dealerPrice = useSelector(dealerPriceSelector);
+  const { currentDealer } = useSelector(dealersSelector);
 
   useEffect(() => {
-    getDealerpriceAll({
+    if (!currentDealer) {
+      getDealerpriceAll({
+        page: currentPage,
+        size: pageSize,
+      });
+      return;
+    }
+
+    getDealerPrice({
+      dealer_id: currentDealer.id,
       page: currentPage,
       size: pageSize,
     });
-  }, [getDealerpriceAll, currentPage, pageSize]);
+  }, [getDealerpriceAll, getDealerPrice, currentPage, pageSize, currentDealer]);
 
   const handleProductClick = (product: DealerPriceItem) => {
     dispatch(setProduct(product));
