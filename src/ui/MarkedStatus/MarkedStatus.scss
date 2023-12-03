@@ -1,5 +1,7 @@
+@import '../../styles/constants.scss';
+
 .marked-status {
   &_marked {
-    color: #00b959;
+    color: $color-marked;
   }
 }

@@ -1,0 +1,51 @@
+@import '../../styles/constants.scss';
+@import '../../styles/mixines.scss';
+
+.statistics-page {
+  @include main-container;
+  display: flex;
+  flex-direction: column;
+
+  &__main {
+    flex-grow: 1;
+    align-items: center;
+    padding: 40px;
+  }
+
+  &__title {
+    @include accent-title-typography;
+    margin-bottom: 20px;
+    color: $color-main-darker;
+  }
+
+  &__current-session {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
+
+    & > li {
+      min-height: 100px;
+      padding: 20px;
+      box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+
+      & > h3 {
+        @include small-title-typography;
+        margin-bottom: 10px;
+        color: $color-main-darker;
+      }
+
+      & > p {
+        @include accent-title-typography;
+      }
+    }
+  }
+
+  &__session-item-success {
+    color: $color-marked;
+  }
+
+  &__session-item-failed {
+    color: $color-failed;
+  }
+}
