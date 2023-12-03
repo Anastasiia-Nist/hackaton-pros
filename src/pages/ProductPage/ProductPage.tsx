@@ -7,6 +7,8 @@ import { productSelector } from 'store/product/productSelectors';
 // import {
 //   useGetMarkupMutation,
 //   usePostMarkupMutation,
+// useDeleteMarkupMutation,
+// usePatchMarkupMutation,
 // } from 'store/api/markupApi';
 // import { useEffect } from 'react';
 
@@ -17,7 +19,11 @@ export const ProductPage = () => {
   //   useGetMarkupMutation();
   // const [postMarkup, { isLoading, data, isSuccess, isError, error }] =
   //   usePostMarkupMutation();
-  //
+  // const [deleteMarkup, { isLoading, data, isSuccess, isError, error }] =
+  //   useDeleteMarkupMutation();
+  // const [patchMarkup, { isLoading, data, isSuccess, isError, error }] =
+  //   usePatchMarkupMutation();
+
   // For Yes and No buttons
   // const [postStatistics, { isLoading, data, isSuccess, isError, error }] =
   //   usePostStatisticsMutation();
