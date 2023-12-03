@@ -43,16 +43,42 @@ export const markupApi = createApi({
           body: arg,
         };
       },
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          dispatch(setMarkup(data));
-        } catch (error) {
-          /* empty */
-        }
+    }),
+    patchMarkup: builder.mutation<
+      { id: number },
+      {
+        key: number;
+        dealer_id: number;
+        product_id: number;
+      }
+    >({
+      query(arg) {
+        return {
+          url: `productdealerkey/${arg.key}`,
+          method: 'POST',
+          body: arg,
+        };
+      },
+    }),
+    deleteMarkup: builder.mutation<
+      { id: number },
+      {
+        key: number;
+      }
+    >({
+      query(arg) {
+        return {
+          url: `productdealerkey/${arg.key}`,
+          method: 'DELETE',
+        };
       },
     }),
   }),
 });
 
-export const { useGetMarkupMutation, usePostMarkupMutation } = markupApi;
+export const {
+  useGetMarkupMutation,
+  usePostMarkupMutation,
+  useDeleteMarkupMutation,
+  usePatchMarkupMutation,
+} = markupApi;
