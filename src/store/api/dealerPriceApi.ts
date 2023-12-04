@@ -41,8 +41,8 @@ export const dealerPriceApi = createApi({
     >({
       query({ dealer_id, page, size }) {
         return {
-          url: 'dealerprice',
-          params: { dealer_id, page, size },
+          url: `dealerprice/${dealer_id}`,
+          params: { page, size },
         };
       },
       async onQueryStarted(_, { dispatch, queryFulfilled }) {

@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export type MarkupType = 'да' | 'нет';
+export enum MarkupType {
+  YES = 'да',
+  NO = 'нет',
+  DEFFERED = 'отложить',
+}
 
 export type Staistics = {
   key: number;

@@ -1,6 +1,10 @@
+// import { useSelector } from 'react-redux';
 import './StatisticsPage.scss';
+// import { currentSessionSelector } from 'store/currentSession/currentSessionSelectors';
 
 export const StatisticsPage = () => {
+  // const currentSession = useSelector(currentSessionSelector);
+
   return (
     <section className="statistics-page">
       <main className="statistics-page__main">
