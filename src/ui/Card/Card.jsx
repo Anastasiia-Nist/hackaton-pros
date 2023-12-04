@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Space } from 'antd';
 import './Card.scss';
+import { MarkedStatus } from 'ui/MarkedStatus/MarkedStatus';
 // product_key,
 // price,
 // product_url,
@@ -29,6 +30,10 @@ const App = ({ card }) => {
           <p>
             <span className="card__description-item"> Артикул:</span>{' '}
             {card.product_key}
+          </p>
+          <p className="card__description-item card__description-item_separate">
+            Статус разметки:&nbsp;
+            <MarkedStatus isMarked={card.is_marked} />
           </p>
         </div>
         <div className="card__img">

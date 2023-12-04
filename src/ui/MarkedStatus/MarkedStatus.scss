@@ -1,7 +1,17 @@
 @import '../../styles/constants.scss';
 
 .marked-status {
-  &_marked {
+  color: $color-main-darker;
+
+  &_success {
     color: $color-marked;
+  }
+
+  &_failed {
+    color: $color-failed;
+  }
+
+  &_deffered {
+    color: $color-deffered;
   }
 }

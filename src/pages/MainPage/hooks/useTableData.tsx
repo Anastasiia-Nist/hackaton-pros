@@ -47,16 +47,14 @@ export const useTableDataSource = (): MainTableDataType[] => {
     return {
       ...item,
       productName: (
-        <Link to={'/product'} onClick={() => handleProductClick(item)}>
+        <Link
+          to={RoutePath[AppRoutes.PRODUCT]}
+          onClick={() => handleProductClick(item)}
+        >
           {item.product_name}
         </Link>
       ),
-      markedStatus: (
-        <MarkedStatus
-          isMarked={item.is_marked}
-          routePath={RoutePath[AppRoutes.PRODUCT]}
-        />
-      ),
+      markedStatus: <MarkedStatus isMarked={item.is_marked} />,
       key: item.id,
     };
   });

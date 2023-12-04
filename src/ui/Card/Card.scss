@@ -8,6 +8,10 @@
     .card__description {
       &-item {
         font-weight: 500;
+
+        &_separate {
+          margin-top: 10px;
+        }
       }
     }
     .card__img {

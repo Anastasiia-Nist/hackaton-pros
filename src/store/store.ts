@@ -16,6 +16,7 @@ import { dealerPriceApi } from './api/dealerPriceApi';
 import { dealersApi } from './api/dealersApi';
 import { markupApi } from './api/markupApi';
 import { statisticsApi } from './api/statisticsApi';
+import currentSessionSlice from './currentSession/currentSessionSlice';
 
 const saveToLocalStorage = (state: StateType) => {
   try {
@@ -58,6 +59,7 @@ const store = configureStore({
     product: productSlice,
     markup: markupSlice,
     statistics: statisticsSlice,
+    currentSession: currentSessionSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

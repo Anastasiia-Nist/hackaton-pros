@@ -14,9 +14,11 @@ export const markupApi = createApi({
   }),
   endpoints: (builder) => ({
     getMarkup: builder.mutation<MarkupState, { productId: number }>({
-      query(arg) {
+      // query(arg) {
+      query() {
         return {
-          url: `markup/${arg.productId}`,
+          // url: `markup/${arg.productId}`,
+          url: `markup`,
         };
       },
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
@@ -63,12 +65,12 @@ export const markupApi = createApi({
     deleteMarkup: builder.mutation<
       { id: number },
       {
-        key: number;
+        productdealerkey_id: number;
       }
     >({
       query(arg) {
         return {
-          url: `productdealerkey/${arg.key}`,
+          url: `productdealerkey/${arg.productdealerkey_id}`,
           method: 'DELETE',
         };
       },
