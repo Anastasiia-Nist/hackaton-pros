@@ -28,10 +28,10 @@ export const statisticsApi = createApi({
         }
       },
     }),
-    postStatistics: builder.mutation<Staistics, Staistics>({
+    postStatistics: builder.mutation<Staistics & { id: number }, Staistics>({
       query(arg) {
         return {
-          url: `statistic`,
+          url: `statistic/`,
           method: 'POST',
           body: arg,
         };

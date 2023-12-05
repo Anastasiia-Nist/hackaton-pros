@@ -45,17 +45,19 @@ export const useTableDataSource = (): MainTableDataType[] => {
 
   return dealerPrice.items.map((item: DealerPriceItem) => {
     return {
-      ...item,
+      ...item.dealerprice,
       productName: (
         <Link
           to={RoutePath[AppRoutes.PRODUCT]}
           onClick={() => handleProductClick(item)}
         >
-          {item.product_name}
+          {item.dealerprice?.product_name}
         </Link>
       ),
-      markedStatus: <MarkedStatus isMarked={item.is_marked} />,
-      key: item.id,
+      markedStatus: <MarkedStatus state={item.state} />,
+      key: item.dealerprice?.id,
+      dealer: item.dealer,
+      state: item.state,
     };
   });
 };

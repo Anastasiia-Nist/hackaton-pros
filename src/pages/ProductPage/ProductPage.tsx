@@ -1,16 +1,8 @@
 import { useSelector } from 'react-redux';
 import './ProductPage.scss';
-import Card from 'ui/Card/Card';
+import { ProductCard } from 'ui/ProductCard/ProductCard';
 import { ProductList } from 'ui/ProductList/ProductList';
 import { productSelector } from 'store/product/productSelectors';
-import { usePostStatisticsMutation } from 'store/api/statisticsApi';
-import {
-  useDeleteMarkupMutation,
-  useGetMarkupMutation,
-  usePostMarkupMutation,
-  // usePatchMarkupMutation,
-} from 'store/api/markupApi';
-import { useCallback, useEffect, useState } from 'react';
 import { Button, Modal, Spin } from 'antd';
 import {
   CheckOutlined,
@@ -18,109 +10,45 @@ import {
   LoadingOutlined,
 } from '@ant-design/icons';
 import clsx from 'clsx';
-import { MarkupType } from 'store/statistics/statisticsSlice';
-import { useAppDispatch } from 'store/store';
-import { setProduct } from 'store/product/productSlice';
-import { useShowMessage } from 'shared/hooks/useShowMessage';
 import { isMarkable } from './utils/utils';
+import { useProductPage } from './hooks/useProductPage';
+import { MarkupType } from 'shared/consts/constants';
 
 export const ProductPage = () => {
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const [selectedProductVariant, setSelectedProductVariant] = useState<
-    number | undefined
-  >(undefined);
   const product = useSelector(productSelector);
-
-  const { showMessage, contextHolder } = useShowMessage();
-  const dispatch = useAppDispatch();
-  const [getMarkup, { isLoading, data }] = useGetMarkupMutation();
-  const [postMarkup, { isSuccess: isMarkupSuccess }] = usePostMarkupMutation();
-  const [deleteMarkup, { isSuccess: isDeleteSuccess }] =
-    useDeleteMarkupMutation();
-  // const [patchMarkup, { isLoading, data, isSuccess, isError, error }] =
-  //   usePatchMarkupMutation();
-
-  const [postStatistics] = usePostStatisticsMutation();
-
-  useEffect(() => {
-    if (!product.is_marked) {
-      getMarkup({ productId: product.id });
-      return;
-    }
-  }, [getMarkup, product.id, product.is_marked]);
-
-  const handleMarkup = useCallback(
-    async (markupType: MarkupType) => {
-      if (selectedProductVariant !== undefined) {
-        await postMarkup({
-          key: product.id,
-          dealer_id: product.dealer_id,
-          product_id: product.id,
-        });
-
-        if (isMarkupSuccess) {
-          postStatistics({
-            key: product.id,
-            markup: selectedProductVariant,
-            last_update: new Date().toISOString(),
-            state: markupType,
-            id: product.id,
-          });
-        }
-      }
-    },
-    [
-      isMarkupSuccess,
-      postMarkup,
-      postStatistics,
-      product.dealer_id,
-      product.id,
-      selectedProductVariant,
-    ],
-  );
-
-  const handleOkConfirm = async () => {
-    await deleteMarkup({ productdealerkey_id: product.id });
-
-    if (isDeleteSuccess) {
-      dispatch(setProduct({ ...product, is_marked: undefined }));
-      getMarkup({ productId: product.id });
-      setIsConfirmOpen(false);
-      showMessage('success', 'Разметка удалена');
-      return;
-    }
-
-    showMessage('error', 'Не удалось удалить разметку');
-  };
-
-  const handleSelectionChange = (value: number) => {
-    if (value === selectedProductVariant) {
-      setSelectedProductVariant(undefined);
-      return;
-    }
-    setSelectedProductVariant(value);
-  };
+  const {
+    isMarkupLoading,
+    markupData,
+    isConfirmOpen,
+    contextHolder,
+    selectedProductVariant,
+    setIsConfirmOpen,
+    handleMarkup,
+    handleStatistic,
+    handleOkConfirm,
+    handleSelectionChange,
+  } = useProductPage({ product });
 
   return (
     <section className="product-page">
       {contextHolder}
       <main className="product-page__main">
         <div className="product-page__block-compare">
-          <Card card={product} />
+          <ProductCard card={product} />
           <div
             className={clsx({
               'product-page__list-wrapper': true,
-              'product-page__list-wrapper_loading': isLoading,
+              'product-page__list-wrapper_loading': isMarkupLoading,
             })}
           >
-            {isLoading ? (
+            {isMarkupLoading ? (
               <Spin
                 className="product-page__spinner"
                 indicator={<LoadingOutlined style={{ fontSize: 32 }} spin />}
               />
             ) : (
               <ProductList
-                listData={data?.items || []}
+                listData={markupData?.items || []}
                 selectedItem={selectedProductVariant}
                 onSelected={handleSelectionChange}
               />
@@ -139,7 +67,7 @@ export const ProductPage = () => {
                 style={{ margin: 16, width: 100 }}
                 onClick={() => handleMarkup(MarkupType.YES)}
                 disabled={
-                  !isMarkable(product.is_marked) ||
+                  !isMarkable(product.state) ||
                   selectedProductVariant === undefined
                 }
               >
@@ -150,21 +78,21 @@ export const ProductPage = () => {
                 type="primary"
                 icon={<CloseOutlined />}
                 style={{ margin: 16, width: 100 }}
-                onClick={() => handleMarkup(MarkupType.NO)}
-                disabled={!isMarkable(product.is_marked)}
+                onClick={() => handleStatistic(MarkupType.NO)}
+                disabled={!isMarkable(product.state)}
               >
                 Нет
               </Button>
               <Button
                 style={{ margin: 16, width: 100 }}
-                onClick={() => handleMarkup(MarkupType.DEFFERED)}
-                disabled={!isMarkable(product.is_marked)}
+                onClick={() => handleStatistic(MarkupType.DEFFERED)}
+                disabled={!isMarkable(product.state)}
               >
                 Отложить
               </Button>
             </div>
 
-            {!isMarkable(product.is_marked) && (
+            {!isMarkable(product.state) && (
               <Button
                 style={{ margin: 16 }}
                 onClick={() => setIsConfirmOpen(true)}

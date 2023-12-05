@@ -1,39 +1,35 @@
-import React from 'react';
 import { Card, Space } from 'antd';
-import './Card.scss';
+import './ProductCard.scss';
 import { MarkedStatus } from 'ui/MarkedStatus/MarkedStatus';
-// product_key,
-// price,
-// product_url,
-// product_name,
-// is_marked,
-// date,
-// dealer_name,
-// dealer_id,
-// id,
-const App = ({ card }) => {
+import { DealerPriceItem } from 'store/dealerPrice/dealerPriceSlice';
+
+type ProductCardProps = {
+  card: DealerPriceItem;
+};
+
+export const ProductCard = ({ card }: ProductCardProps) => {
   return (
     <Space direction="vertical">
       <Card
-        title={card.product_name}
-        extra={<a href={card.product_url}>Ссылка на товар</a>}
+        title={card.dealerprice.product_name}
+        extra={<a href={card.dealerprice.product_url}>Ссылка на товар</a>}
       >
         <div className="card__description">
           <p>
             <span className="card__description-item">Дилер: </span>{' '}
-            {card.dealer_name}
+            {card.dealer}
           </p>
           <p>
-            <span className="card__description-item">Цена: </span> {card.price}{' '}
-            руб.
+            <span className="card__description-item">Цена: </span>{' '}
+            {card.dealerprice.price} руб.
           </p>
           <p>
             <span className="card__description-item"> Артикул:</span>{' '}
-            {card.product_key}
+            {card.dealerprice.product_key}
           </p>
           <p className="card__description-item card__description-item_separate">
             Статус разметки:&nbsp;
-            <MarkedStatus isMarked={card.is_marked} />
+            <MarkedStatus state={card.state} />
           </p>
         </div>
         <div className="card__img">
@@ -43,5 +39,3 @@ const App = ({ card }) => {
     </Space>
   );
 };
-
-export default App;
