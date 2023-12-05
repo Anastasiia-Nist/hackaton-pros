@@ -12,7 +12,11 @@ import {
 } from 'store/api/markupApi';
 import { useCallback, useEffect, useState } from 'react';
 import { Button, Modal, Spin } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
+import {
+  CheckOutlined,
+  CloseOutlined,
+  LoadingOutlined,
+} from '@ant-design/icons';
 import clsx from 'clsx';
 import { MarkupType } from 'store/statistics/statisticsSlice';
 import { useAppDispatch } from 'store/store';
@@ -36,7 +40,6 @@ export const ProductPage = () => {
   // const [patchMarkup, { isLoading, data, isSuccess, isError, error }] =
   //   usePatchMarkupMutation();
 
-  // For Yes and No buttons
   const [postStatistics] = usePostStatisticsMutation();
 
   useEffect(() => {
@@ -91,7 +94,6 @@ export const ProductPage = () => {
   };
 
   const handleSelectionChange = (value: number) => {
-    console.log(value, selectedProductVariant);
     if (value === selectedProductVariant) {
       setSelectedProductVariant(undefined);
       return;
@@ -131,8 +133,10 @@ export const ProductPage = () => {
           >
             <div>
               <Button
+                className="markup-controls__button markup-controls__button_type_yes"
                 type="primary"
-                style={{ margin: 16 }}
+                icon={<CheckOutlined />}
+                style={{ margin: 16, width: 100 }}
                 onClick={() => handleMarkup(MarkupType.YES)}
                 disabled={
                   !isMarkable(product.is_marked) ||
@@ -142,23 +146,19 @@ export const ProductPage = () => {
                 Да
               </Button>
               <Button
+                className="markup-controls__button markup-controls__button_type_no"
                 type="primary"
-                style={{ margin: 16 }}
+                icon={<CloseOutlined />}
+                style={{ margin: 16, width: 100 }}
                 onClick={() => handleMarkup(MarkupType.NO)}
-                disabled={
-                  !isMarkable(product.is_marked) ||
-                  selectedProductVariant === undefined
-                }
+                disabled={!isMarkable(product.is_marked)}
               >
                 Нет
               </Button>
               <Button
-                style={{ margin: 16 }}
+                style={{ margin: 16, width: 100 }}
                 onClick={() => handleMarkup(MarkupType.DEFFERED)}
-                disabled={
-                  !isMarkable(product.is_marked) ||
-                  selectedProductVariant === undefined
-                }
+                disabled={!isMarkable(product.is_marked)}
               >
                 Отложить
               </Button>

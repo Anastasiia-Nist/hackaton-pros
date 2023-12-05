@@ -26,14 +26,13 @@ export const ProductList = ({
         rowSelection={{
           type: 'radio',
           selectedRowKeys: [selectedItem as Key],
-          onSelect: (record, selected) => {
-            if (selected) {
+        }}
+        onRow={(record) => {
+          return {
+            onClick: () => {
               onSelected(record.key as number);
-            }
-          },
-          // onChange: (selectedRowKeys) => {
-          //   onSelected(selectedRowKeys[0] as number);
-          // },
+            },
+          };
         }}
       />
     </>

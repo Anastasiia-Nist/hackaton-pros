@@ -1,0 +1,9 @@
+node_modules/
+dist/
+storybook-static/
+.husky/
+.storybook/
+.git
+.gitignore
+.env
+*.md
