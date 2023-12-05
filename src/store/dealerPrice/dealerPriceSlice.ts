@@ -1,16 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { MarkupType } from 'store/statistics/statisticsSlice';
 
 export type DealerPriceItem = {
+  dealer: string;
+  dealerprice: {
+    product_key: string;
+    price: string;
+    product_url: string;
+    product_name: string;
+    date: string;
+    dealer_id: number;
+    id: number;
+  };
+  state: string;
+};
+
+export type DealerPriceItemFlat = {
+  dealer: string;
   product_key: string;
   price: string;
   product_url: string;
   product_name: string;
-  is_marked: MarkupType | undefined;
   date: string;
-  dealer_name: string;
   dealer_id: number;
   id: number;
+  state: string;
 };
 
 export type DealerPriceState = {

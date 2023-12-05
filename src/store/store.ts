@@ -17,6 +17,11 @@ import { dealersApi } from './api/dealersApi';
 import { markupApi } from './api/markupApi';
 import { statisticsApi } from './api/statisticsApi';
 import currentSessionSlice from './currentSession/currentSessionSlice';
+import { TOKEN } from 'shared/consts/constants';
+
+(() => {
+  localStorage.setItem('token', TOKEN);
+})();
 
 const saveToLocalStorage = (state: StateType) => {
   try {

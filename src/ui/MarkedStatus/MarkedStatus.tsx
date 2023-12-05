@@ -1,28 +1,28 @@
-type MarkedStatus = {
-  isMarked: MarkupType | undefined;
-};
-
-import { MarkupType } from 'store/statistics/statisticsSlice';
+import { MarkupType } from 'shared/consts/constants';
 import './MarkedStatus.scss';
 
-export const MarkedStatus = ({ isMarked }: MarkedStatus) => {
-  if (!isMarked) {
+type MarkedStatusProps = {
+  state: string;
+};
+
+export const MarkedStatus = ({ state }: MarkedStatusProps) => {
+  if (!state) {
     return <span className="marked-status">не размечено</span>;
   }
 
-  if (isMarked === MarkupType.YES) {
+  if (state === MarkupType.YES) {
     return (
       <span className="marked-status marked-status_success">Размечено</span>
     );
   }
 
-  if (isMarked === MarkupType.NO) {
+  if (state === MarkupType.NO) {
     return (
       <span className="marked-status marked-status_failed">Нет совпадений</span>
     );
   }
 
-  if (isMarked === MarkupType.DEFFERED) {
+  if (state === MarkupType.DEFFERED) {
     return (
       <span className="marked-status marked-status_deffered">отложено</span>
     );
