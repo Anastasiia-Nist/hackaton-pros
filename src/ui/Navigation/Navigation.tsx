@@ -42,7 +42,6 @@ const App: React.FC = () => {
   const navigate = useNavigate();
 
   const onClick: MenuProps['onClick'] = (e) => {
-    console.log('click ', e);
     navigate(e.key, { replace: true });
   };
 

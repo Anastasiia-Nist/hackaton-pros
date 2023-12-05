@@ -1,46 +1,40 @@
-import React from 'react';
-import { useState } from 'react';
-import { Divider, List, Button } from 'antd';
+import { Divider, Table } from 'antd';
+import type { Markup } from 'store/markup/markupSlice';
+import './ProductList.scss';
+import { columns } from './model/consts/consts';
+import { Key } from 'antd/es/table/interface';
 
-const data = [
-  'Средство универсальное Prosept Universal Spray',
-  'Средство не универсальное Prosept Universal Spray',
-  'Средство ещё какое-то Prosept Universal Spray',
-  'Средство универсальное 2в1 Prosept Universal Spray',
-];
+type ProductListProps = {
+  listData: Markup[];
+  onSelected: (value: number) => void;
+  selectedItem: number | undefined;
+};
 
-const App: React.FC = () => {
-  const [dataSource, setDataSource] = useState(data);
-
-  const handleAdd = () => {
-    setDataSource([...dataSource, 'Ещё какое-то средство']);
-  };
-
+export const ProductList = ({
+  listData,
+  onSelected,
+  selectedItem,
+}: ProductListProps) => {
   return (
     <>
       <Divider orientation="left">Список возможных совпадений</Divider>
-      <List
-        size="small"
-        bordered
-        dataSource={dataSource}
-        renderItem={(item) => (
-          <List.Item
-            actions={[
-              <a key="list-product-yes">Да</a>,
-              <a key="list-product-no">Нет</a>,
-              <a key="list-product-postpone">Отложить</a>,
-            ]}
-          >
-            {item}
-          </List.Item>
-        )}
-      >
-        <Button onClick={handleAdd} type="primary" style={{ margin: 16 }}>
-          Ещё варианты
-        </Button>
-      </List>
+      <Table
+        dataSource={listData}
+        columns={columns}
+        pagination={false}
+        scroll={{ y: 160 }}
+        rowSelection={{
+          type: 'radio',
+          selectedRowKeys: [selectedItem as Key],
+        }}
+        onRow={(record) => {
+          return {
+            onClick: () => {
+              onSelected(record.key as number);
+            },
+          };
+        }}
+      />
     </>
   );
 };
-
-export default App;

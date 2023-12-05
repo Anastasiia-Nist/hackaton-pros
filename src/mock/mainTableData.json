@@ -8,7 +8,7 @@
       {
         "id": 0,
         "product_name": "Средство универсальное Prosept Universal Spray",
-        "is_marked": true,
+        "is_marked": "да",
         "date": "2023-07-11",
         "dealer_id": 2,
         "product_key": "546227",
@@ -19,7 +19,7 @@
       {
         "id": 1,
         "product_name": "Средство универсальное Prosept 1",
-        "is_marked": true,
+        "is_marked": "отложить",
         "date": "2023-07-11",
         "dealer_id": 2,
         "product_key": "546227",
@@ -30,7 +30,6 @@
       {
         "id": 2,
         "product_name": "Средство универсальное 2",
-        "is_marked": false,
         "date": "2023-07-11",
         "dealer_id": 2,
         "product_key": "546227",
@@ -41,7 +40,6 @@
       {
         "id": 3,
         "product_name": "Средство Prosept Spray",
-        "is_marked": false,
         "date": "2023-07-11",
         "dealer_id": 2,
         "product_key": "546227",
@@ -52,7 +50,7 @@
       {
         "id": 4,
         "product_name": "Средство универсальное Spray",
-        "is_marked": true,
+        "is_marked": "да",
         "date": "2023-07-11",
         "dealer_id": 2,
         "product_key": "546227",
@@ -63,7 +61,7 @@
       {
         "id": 5,
         "product_name": "Средство универсальное",
-        "is_marked": false,
+        "is_marked": "нет",
         "date": "2023-07-11",
         "dealer_id": 2,
         "product_key": "546227",
@@ -74,7 +72,6 @@
       {
         "id": 6,
         "product_name": "Средство 1",
-        "is_marked": false,
         "date": "2023-07-11",
         "dealer_id": 2,
         "product_key": "546227",
@@ -85,7 +82,7 @@
       {
         "id": 7,
         "product_name": "Средство 345",
-        "is_marked": true,
+        "is_marked": "да",
         "date": "2023-07-11",
         "dealer_id": 2,
         "product_key": "546227",
@@ -112,6 +109,50 @@
       {
         "id": 4,
         "name": "Test Store 2"
+      }
+    ],
+    "total": 26,
+    "page": 1,
+    "pages": 1,
+    "size": 1
+  },
+  "markup": {
+    "items": [
+      {
+        "key": 0,
+        "product_id": 0,
+        "create_date": "2023-12-03T14:59:50.827Z",
+        "name": "Product 100",
+        "queue": 5,
+        "quality": 0,
+        "id": 0
+      },
+      {
+        "key": 1,
+        "product_id": 0,
+        "create_date": "2023-12-03T14:59:50.827Z",
+        "name": "Product 15",
+        "queue": 1,
+        "quality": 0,
+        "id": 1
+      },
+      {
+        "key": 2,
+        "product_id": 0,
+        "create_date": "2023-12-03T14:59:50.827Z",
+        "name": "Product 44",
+        "queue": 3,
+        "quality": 0,
+        "id": 2
+      },
+      {
+        "key": 3,
+        "product_id": 0,
+        "create_date": "2023-12-03T14:59:50.827Z",
+        "name": "Product 10",
+        "queue": 2,
+        "quality": 0,
+        "id": 3
       }
     ],
     "total": 26,

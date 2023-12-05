@@ -16,8 +16,22 @@
     flex-direction: column;
     justify-content: center;
   }
-  &__product-info {
-    display: flex;
-    justify-content: space-between;
+
+  &__list-wrapper {
+    min-height: 215px;
+
+    &_loading {
+      display: flex;
+    }
   }
+
+  &__spinner {
+    margin: auto;
+  }
+}
+
+.markup-controls {
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-between;
 }

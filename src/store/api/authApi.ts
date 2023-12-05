@@ -14,7 +14,7 @@ type SignupUser = {
 };
 
 type LoginUser = {
-  email: string;
+  username: string;
   password: string;
 };
 
@@ -23,7 +23,10 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers) => {
-      headers.set('authorization', `Bearer ${localStorage.getItem('token')}`);
+      const token = localStorage.getItem('token');
+      if (token) {
+        headers.set('authorization', `Bearer ${localStorage.getItem('token')}`);
+      }
 
       return headers;
     },

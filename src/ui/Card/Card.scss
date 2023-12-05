@@ -1,0 +1,21 @@
+.ant-space {
+  width: 100%;
+
+  .ant-card-body {
+    display: flex;
+    align-items: center;
+
+    .card__description {
+      &-item {
+        font-weight: 500;
+
+        &_separate {
+          margin-top: 10px;
+        }
+      }
+    }
+    .card__img {
+      margin-left: auto;
+    }
+  }
+}

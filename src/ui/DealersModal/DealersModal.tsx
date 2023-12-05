@@ -111,9 +111,6 @@ export const DealersModal = ({ isOpen, handleClose }: DealersModalProps) => {
               : false || currentDealer?.key
                 ? [currentDealer?.key as Key]
                 : [],
-            onChange: (selectedRowKeys) => {
-              setSelectedDealer(selectedRowKeys[0] as number);
-            },
           }}
           onRow={(record) => {
             return {

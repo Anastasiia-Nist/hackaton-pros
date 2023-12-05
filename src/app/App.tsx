@@ -6,8 +6,17 @@ import { Header } from 'ui/Header/Header';
 import { Footer } from 'ui/Footer/Footer';
 import { RegistrationPopup } from 'ui/RegistrationPopup/RegistrationPopup';
 import { LoginPopup } from 'ui/LoginPopup/LoginPopup';
+import { useEffect } from 'react';
+import { useLoginUserMutation } from 'store/api/authApi';
+import { PASSWORD, USERNAME } from 'shared/consts/constants';
 
 export const App = () => {
+  const [loginUser] = useLoginUserMutation();
+
+  useEffect(() => {
+    loginUser({ username: USERNAME, password: PASSWORD });
+  }, [loginUser]);
+
   return (
     <>
       <Header />

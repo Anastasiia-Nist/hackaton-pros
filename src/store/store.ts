@@ -5,13 +5,18 @@ import filtersSlice from './filters/filtersSlice';
 import mainTablePagination from './mainTablePagination/mainTablePagination';
 import authSlice from './auth/authSlice';
 import dealerPriceSlice from './dealerPrice/dealerPriceSlice';
-import { authApi } from './api/authApi';
-import { userApi } from './api/userApi';
-import { dealerPriceApi } from './api/dealerPriceApi';
+import markupSlice from './markup/markupSlice';
 import productSlice from './product/productSlice';
 import dealersSlice from './dealers/dealersSlice';
 import dealersPaginationSlice from './dealersPagination/dealersPaginationSlice';
+import statisticsSlice from './statistics/statisticsSlice';
+import { authApi } from './api/authApi';
+import { userApi } from './api/userApi';
+import { dealerPriceApi } from './api/dealerPriceApi';
 import { dealersApi } from './api/dealersApi';
+import { markupApi } from './api/markupApi';
+import { statisticsApi } from './api/statisticsApi';
+import currentSessionSlice from './currentSession/currentSessionSlice';
 
 const saveToLocalStorage = (state: StateType) => {
   try {
@@ -42,6 +47,8 @@ const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [dealerPriceApi.reducerPath]: dealerPriceApi.reducer,
     [dealersApi.reducerPath]: dealersApi.reducer,
+    [markupApi.reducerPath]: markupApi.reducer,
+    [statisticsApi.reducerPath]: statisticsApi.reducer,
     auth: authSlice,
     popups: popupsSlice,
     filters: filtersSlice,
@@ -50,14 +57,18 @@ const store = configureStore({
     dealers: dealersSlice,
     dealerPrice: dealerPriceSlice,
     product: productSlice,
+    markup: markupSlice,
+    statistics: statisticsSlice,
+    currentSession: currentSessionSlice,
   },
-  devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       authApi.middleware,
       userApi.middleware,
       dealerPriceApi.middleware,
       dealersApi.middleware,
+      markupApi.middleware,
+      statisticsApi.middleware,
     ),
 });
 

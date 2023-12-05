@@ -9,6 +9,7 @@
   flex-direction: column;
   @extend %font-main;
   background-color: $color-bg-white;
+  color: $color-main-dark;
 }
 /* reset style and mixed classes */
 *,
