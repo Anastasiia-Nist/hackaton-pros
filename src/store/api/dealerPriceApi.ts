@@ -22,7 +22,7 @@ export const dealerPriceApi = createApi({
     >({
       query(arg) {
         return {
-          url: 'dealerprice',
+          url: 'dealerprice/',
           params: { ...arg },
         };
       },

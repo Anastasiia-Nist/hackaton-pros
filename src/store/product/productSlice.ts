@@ -2,15 +2,17 @@ import { createSlice } from '@reduxjs/toolkit';
 import { DealerPriceItem } from 'store/dealerPrice/dealerPriceSlice';
 
 const initialState: DealerPriceItem = {
-  product_key: '',
-  price: '',
-  product_url: '',
-  product_name: '',
-  is_marked: undefined,
-  date: '',
-  dealer_name: '',
-  dealer_id: 0,
-  id: 0,
+  dealer: '',
+  dealerprice: {
+    product_key: '',
+    price: '',
+    product_url: '',
+    product_name: '',
+    date: '',
+    dealer_id: 0,
+    id: 0,
+  },
+  state: '',
 };
 
 const productSlice = createSlice({

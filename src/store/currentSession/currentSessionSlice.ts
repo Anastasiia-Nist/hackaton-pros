@@ -1,21 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
+import dayjs from 'dayjs';
 
 export type MarkupState = {
-  queueVariant: Array<number>;
+  queueVariants: Array<number>;
   markedCount: number;
   successMarkups: number;
   failedMarkups: number;
   deffered: number;
-  date: Date;
-};
+  date: string;
+} | null;
 
 const initialState: MarkupState = {
-  queueVariant: [],
+  queueVariants: [],
   markedCount: 0,
   successMarkups: 0,
   failedMarkups: 0,
   deffered: 0,
-  date: new Date(),
+  date: dayjs().format('YYYY-MM-DD'),
 };
 
 const currentSessionSlice = createSlice({
