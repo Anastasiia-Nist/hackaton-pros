@@ -2,6 +2,12 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from 'shared/consts/constants';
 import { MarkupState, setMarkup } from 'store/markup/markupSlice';
 
+export type MarkupFuncProps = {
+  key: number;
+  dealer_id: number;
+  product_id: number;
+};
+
 export const markupApi = createApi({
   reducerPath: 'markupApi',
   baseQuery: fetchBaseQuery({
@@ -14,11 +20,9 @@ export const markupApi = createApi({
   }),
   endpoints: (builder) => ({
     getMarkup: builder.mutation<MarkupState, { productId: number }>({
-      // query(arg) {
-      query() {
+      query(arg) {
         return {
-          // url: `markup/${arg.productId}`,
-          url: `markup`,
+          url: `markup/${arg.productId}`,
         };
       },
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
@@ -30,14 +34,7 @@ export const markupApi = createApi({
         }
       },
     }),
-    postMarkup: builder.mutation<
-      { id: number },
-      {
-        key: number;
-        dealer_id: number;
-        product_id: number;
-      }
-    >({
+    postMarkup: builder.mutation<{ id: number }, MarkupFuncProps>({
       query(arg) {
         return {
           url: `productdealerkey`,
@@ -46,14 +43,7 @@ export const markupApi = createApi({
         };
       },
     }),
-    patchMarkup: builder.mutation<
-      { id: number },
-      {
-        key: number;
-        dealer_id: number;
-        product_id: number;
-      }
-    >({
+    patchMarkup: builder.mutation<{ id: number }, MarkupFuncProps>({
       query(arg) {
         return {
           url: `productdealerkey/${arg.key}`,

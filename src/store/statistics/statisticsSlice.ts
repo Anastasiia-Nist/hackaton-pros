@@ -1,17 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export enum MarkupType {
-  YES = 'да',
-  NO = 'нет',
-  DEFFERED = 'отложить',
-}
-
 export type Staistics = {
   key: number;
-  markup: number;
+  markup?: number;
   last_update: string;
-  state: MarkupType;
-  id: number;
+  state: string;
 };
 
 const initialState: Array<Staistics> = [];

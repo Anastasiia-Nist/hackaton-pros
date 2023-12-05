@@ -111,6 +111,11 @@ export const DealersModal = ({ isOpen, handleClose }: DealersModalProps) => {
               : false || currentDealer?.key
                 ? [currentDealer?.key as Key]
                 : [],
+            // Do not remove. This func is for the radio button click
+            // otherwise it will not work
+            onChange: (selectedRowKeys) => {
+              setSelectedDealer(selectedRowKeys[0] as number);
+            },
           }}
           onRow={(record) => {
             return {
