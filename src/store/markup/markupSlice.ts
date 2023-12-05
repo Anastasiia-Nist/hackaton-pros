@@ -1,11 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export enum MarkupType {
-  YES = 'да',
-  NO = 'нет',
-  DEFFERED = 'отложить',
-}
-
 export type Markup = {
   key: number;
   product_id: number;
