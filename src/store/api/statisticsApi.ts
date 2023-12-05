@@ -16,7 +16,7 @@ export const statisticsApi = createApi({
     getStatistics: builder.mutation<Array<Staistics>, void>({
       query() {
         return {
-          url: 'statistic',
+          url: 'statistic/',
         };
       },
       async onQueryStarted(_, { dispatch, queryFulfilled }) {

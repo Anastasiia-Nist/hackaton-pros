@@ -12,7 +12,11 @@ export const ProductCard = ({ card }: ProductCardProps) => {
     <Space direction="vertical">
       <Card
         title={card.dealerprice.product_name}
-        extra={<a href={card.dealerprice.product_url}>Ссылка на товар</a>}
+        extra={
+          <a target="_blank" rel="noopener" href={card.dealerprice.product_url}>
+            Ссылка на товар
+          </a>
+        }
       >
         <div className="card__description">
           <p>

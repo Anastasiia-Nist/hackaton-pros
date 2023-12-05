@@ -10,6 +10,11 @@ import { setProduct } from 'store/product/productSlice';
 import { useShowMessage } from 'shared/hooks/useShowMessage';
 import { DealerPriceItem } from 'store/dealerPrice/dealerPriceSlice';
 import { isMarkable, prepareMarkup, prepareStatistics } from '../utils/utils';
+import { MarkupType } from 'shared/consts/constants';
+import { setCurrentSession } from 'store/currentSession/currentSessionSlice';
+import { currentSessionSelector } from 'store/currentSession/currentSessionSelectors';
+import { useSelector } from 'react-redux';
+import { Markup } from 'store/markup/markupSlice';
 
 type UseProductPageProps = {
   product: DealerPriceItem;
@@ -18,11 +23,13 @@ type UseProductPageProps = {
 export const useProductPage = ({ product }: UseProductPageProps) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [selectedProductVariant, setSelectedProductVariant] = useState<
-    number | undefined
+    Markup | undefined
   >(undefined);
 
-  const { showMessage, contextHolder } = useShowMessage();
   const dispatch = useAppDispatch();
+  const currentSession = useSelector(currentSessionSelector);
+  const { showMessage, contextHolder } = useShowMessage();
+
   const [getMarkup, { isLoading: isMarkupLoading, data: markupData }] =
     useGetMarkupMutation();
   const [postMarkup] = usePostMarkupMutation();
@@ -42,15 +49,24 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
     async (curProduct: DealerPriceItem) => {
       try {
         if (selectedProductVariant) {
-          await postMarkup(prepareMarkup(curProduct, selectedProductVariant));
-          throw new Error();
+          await postMarkup(
+            prepareMarkup(curProduct, selectedProductVariant.product_id),
+          );
+          dispatch(
+            setCurrentSession({
+              ...currentSession,
+              successMarkups: currentSession.failedMarkups + 1,
+            }),
+          );
+          return;
         }
+        throw new Error();
       } catch {
         showMessage('error', 'Не удалось выполнить разметку');
         return;
       }
     },
-    [postMarkup, selectedProductVariant, showMessage],
+    [currentSession, dispatch, postMarkup, selectedProductVariant, showMessage],
   );
 
   const handlePostStatistic = useCallback(
@@ -63,18 +79,40 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
         await postStatistics(
           prepareStatistics(curProduct, markupType, selectedVariant),
         );
+
+        if (markupType === MarkupType.NO) {
+          dispatch(
+            setCurrentSession({
+              ...currentSession,
+              failedMarkups: currentSession.failedMarkups + 1,
+            }),
+          );
+        }
+
+        if (markupType === MarkupType.DEFFERED) {
+          dispatch(
+            setCurrentSession({
+              ...currentSession,
+              deffered: currentSession.deffered + 1,
+            }),
+          );
+        }
       } catch {
         showMessage('error', 'Ошибка сохранения статистики');
         return;
       }
     },
-    [postStatistics, showMessage],
+    [currentSession, dispatch, postStatistics, showMessage],
   );
 
   const handleMarkup = useCallback(
     async (markupType: string) => {
       await handlePostMarkup(product);
-      await handlePostStatistic(markupType, selectedProductVariant, product);
+      await handlePostStatistic(
+        markupType,
+        selectedProductVariant?.product_id,
+        product,
+      );
       dispatch(setProduct({ ...product, is_marked: markupType }));
     },
     [
@@ -88,7 +126,11 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
 
   const handleStatistic = useCallback(
     async (markupType: string) => {
-      await handlePostStatistic(markupType, selectedProductVariant, product);
+      await handlePostStatistic(
+        markupType,
+        selectedProductVariant?.product_id,
+        product,
+      );
       dispatch(setProduct({ ...product, is_marked: markupType }));
     },
     [handlePostStatistic, selectedProductVariant, product, dispatch],
@@ -110,11 +152,14 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
   };
 
   const handleSelectionChange = (value: number) => {
-    if (value === selectedProductVariant) {
+    if (value === selectedProductVariant?.product_id) {
       setSelectedProductVariant(undefined);
       return;
     }
-    setSelectedProductVariant(value);
+
+    setSelectedProductVariant(
+      markupData?.items.find((item) => item.product_id === value),
+    );
   };
 
   return {

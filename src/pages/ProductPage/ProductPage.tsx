@@ -49,7 +49,7 @@ export const ProductPage = () => {
             ) : (
               <ProductList
                 listData={markupData?.items || []}
-                selectedItem={selectedProductVariant}
+                selectedItem={selectedProductVariant?.product_id}
                 onSelected={handleSelectionChange}
               />
             )}

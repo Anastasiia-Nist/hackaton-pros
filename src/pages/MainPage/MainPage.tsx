@@ -33,7 +33,7 @@ export const MainPage = () => {
     dispatch(setMainTablePageSize(pageSize));
     dispatch(setMainTableCurrentPage(1));
   };
-
+  console.log(dataSource);
   return (
     <section className="main-page" aria-label="Главная страница">
       <main className="main-page__main">

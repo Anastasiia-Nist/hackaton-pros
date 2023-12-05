@@ -8,7 +8,7 @@ export const columns: ColumnType<MainTableDataType>[] = [
   },
   {
     title: 'Статус разметки',
-    dataIndex: 'state',
+    dataIndex: 'markedStatus',
   },
   {
     title: 'Дата получения',
