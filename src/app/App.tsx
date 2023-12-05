@@ -8,9 +8,7 @@ import { RegistrationPopup } from 'ui/RegistrationPopup/RegistrationPopup';
 import { LoginPopup } from 'ui/LoginPopup/LoginPopup';
 import { useEffect } from 'react';
 import { useLoginUserMutation } from 'store/api/authApi';
-
-const USERNAME = import.meta.env.VITE_USERNAME;
-const PASSWORD = import.meta.env.VITE_PASSWORD;
+import { PASSWORD, USERNAME } from 'shared/consts/constants';
 
 export const App = () => {
   const [loginUser] = useLoginUserMutation();
