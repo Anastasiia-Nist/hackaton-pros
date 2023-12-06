@@ -28,18 +28,16 @@ export const FilterContent = ({ onSubmit }: FilterContentProps) => {
     name: nameDefault,
     markupState: markedDefault,
     dateRange: dateRangeDefault,
-    dealer: dealerDefault,
   } = useSelector(mainTableFilterSelector);
 
   const [form] = Form.useForm();
 
-  const [name, setName] = useState(nameDefault);
+  const [name, setName] = useState<{ value: string | undefined }>(nameDefault);
   const [markupState, setMarkupState] = useState(markedDefault);
   const [dateRange, setDateRange] = useState<{
     dateFrom: string | undefined;
     dateTo: string | undefined;
   }>(dateRangeDefault);
-  const [dealer, setDealer] = useState(dealerDefault);
   const [isReset, setIsReset] = useState(false);
 
   const initialValues = useMemo(() => {
@@ -50,16 +48,17 @@ export const FilterContent = ({ onSubmit }: FilterContentProps) => {
         dateRangeDefault.dateFrom ? dayjs(dateRangeDefault.dateFrom) : null,
         dateRangeDefault.dateTo ? dayjs(dateRangeDefault.dateTo) : null,
       ],
-      dealer: dealerDefault.value,
     };
-  }, [nameDefault, markedDefault, dateRangeDefault, dealerDefault]);
+  }, [nameDefault, markedDefault, dateRangeDefault]);
 
   const resetFieldsStates = useCallback(() => {
-    setName(nameDefault);
-    setMarkupState(markedDefault);
-    setDateRange(dateRangeDefault);
-    setDealer(dealerDefault);
-  }, [nameDefault, markedDefault, dateRangeDefault, dealerDefault]);
+    setName({ value: undefined });
+    setMarkupState({ value: MarkupType.ALL });
+    setDateRange({
+      dateFrom: undefined,
+      dateTo: undefined,
+    });
+  }, []);
 
   const handleReset = () => {
     dispatch(resetMainTableFilter());
@@ -67,11 +66,19 @@ export const FilterContent = ({ onSubmit }: FilterContentProps) => {
     setIsReset(true);
     form.setFieldsValue(initialValues);
     resetFieldsStates();
+    onSubmit({
+      name: { value: undefined },
+      markupState: { value: undefined },
+      dateRange: {
+        dateFrom: undefined,
+        dateTo: undefined,
+      },
+    });
   };
 
   const handleSubmit = () => {
-    dispatch(setMainTableFilter({ name, markupState, dateRange, dealer }));
-    onSubmit({ name, markupState, dateRange, dealer });
+    dispatch(setMainTableFilter({ name, markupState, dateRange }));
+    onSubmit({ name, markupState, dateRange });
   };
 
   const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,8 +91,8 @@ export const FilterContent = ({ onSubmit }: FilterContentProps) => {
 
   const onDateRangeChange = (_: RangeValue<Dayjs>, dateStrings: string[]) => {
     setDateRange({
-      dateFrom: dateStrings.at(0),
-      dateTo: dateStrings.at(1),
+      dateFrom: dateStrings.at(0) || undefined,
+      dateTo: dateStrings.at(1) || undefined,
     });
   };
 

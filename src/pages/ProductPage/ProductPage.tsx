@@ -3,15 +3,13 @@ import './ProductPage.scss';
 import { ProductCard } from 'ui/ProductCard/ProductCard';
 import { ProductList } from 'ui/ProductList/ProductList';
 import { productSelector } from 'store/product/productSelectors';
-import { Button, Spin } from 'antd';
+import { Button } from 'antd';
 import {
   CheckOutlined,
   CloseOutlined,
-  LoadingOutlined,
   LeftOutlined,
   RightOutlined,
 } from '@ant-design/icons';
-import clsx from 'clsx';
 import { isMarkable } from './utils/utils';
 import { useProductPage } from './hooks/useProductPage';
 import { MarkupType } from 'shared/consts/constants';
@@ -34,25 +32,12 @@ export const ProductPage = () => {
       <main className="product-page__main">
         <div className="product-page__block-compare">
           <ProductCard card={product} />
-          <div
-            className={clsx({
-              'product-page__list-wrapper': true,
-              'product-page__list-wrapper_loading': isMarkupLoading,
-            })}
-          >
-            {isMarkupLoading ? (
-              <Spin
-                className="product-page__spinner"
-                indicator={<LoadingOutlined style={{ fontSize: 32 }} spin />}
-              />
-            ) : (
-              <ProductList
-                listData={markupDataSource}
-                selectedItem={selectedProductVariant?.product_id}
-                onSelected={handleSelectionChange}
-              />
-            )}
-          </div>
+          <ProductList
+            listData={markupDataSource}
+            selectedItem={selectedProductVariant?.product_id}
+            onSelected={handleSelectionChange}
+            isLoading={isMarkupLoading}
+          />
 
           <section
             className="markup-controls"

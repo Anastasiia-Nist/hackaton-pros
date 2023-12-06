@@ -8,10 +8,11 @@ import { dealersSelector } from 'store/dealers/dealersSelectors';
 type UseDealersData = {
   dataSource: Dealer[];
   currentDealer: Dealer | null;
+  isLoading: boolean;
 };
 
 export const useDealersData = (isOpen: boolean): UseDealersData => {
-  const [getDealers] = useGetDealersMutation();
+  const [getDealers, { isLoading }] = useGetDealersMutation();
   const { currentPage, pageSize } = useSelector(dealersPaginationSelector);
   const { items: dealers, currentDealer } = useSelector(dealersSelector);
 
@@ -32,5 +33,6 @@ export const useDealersData = (isOpen: boolean): UseDealersData => {
       };
     }),
     currentDealer,
+    isLoading,
   };
 };

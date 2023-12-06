@@ -45,10 +45,10 @@ export const dealerPriceApi = createApi({
       },
     }),
     getDealerprice: builder.mutation<DealerPriceState, GetDealerPrice>({
-      query({ dealer_id, page, size }) {
+      query({ dealer_id, ...arg }) {
         return {
           url: `api/v1/dealerprice/${dealer_id}`,
-          params: { page, size },
+          params: { dealer_id, ...arg },
         };
       },
       async onQueryStarted(_, { dispatch, queryFulfilled }) {

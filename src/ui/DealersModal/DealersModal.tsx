@@ -21,7 +21,7 @@ type DealersModalProps = {
 
 export const DealersModal = ({ isOpen, handleClose }: DealersModalProps) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const { dataSource, currentDealer } = useDealersData(isOpen);
+  const { dataSource, currentDealer, isLoading } = useDealersData(isOpen);
   const [selectedDealer, setSelectedDealer] = useState<number | undefined>(
     currentDealer?.key || undefined,
   );
@@ -98,6 +98,7 @@ export const DealersModal = ({ isOpen, handleClose }: DealersModalProps) => {
         ]}
       >
         <Table
+          loading={isLoading}
           scroll={{ y: 600 }}
           className="dealers-modal__table"
           columns={columns}
