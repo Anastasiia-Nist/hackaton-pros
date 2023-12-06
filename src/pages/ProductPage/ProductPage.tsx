@@ -18,7 +18,7 @@ export const ProductPage = () => {
   const product = useSelector(productSelector);
   const {
     isMarkupLoading,
-    markupData,
+    markupDataSource,
     isConfirmOpen,
     contextHolder,
     selectedProductVariant,
@@ -48,7 +48,7 @@ export const ProductPage = () => {
               />
             ) : (
               <ProductList
-                listData={markupData?.items || []}
+                listData={markupDataSource}
                 selectedItem={selectedProductVariant?.product_id}
                 onSelected={handleSelectionChange}
               />

@@ -4,7 +4,7 @@ import {
   useGetMarkupMutation,
   usePostMarkupMutation,
 } from 'store/api/markupApi';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch } from 'store/store';
 import { setProduct } from 'store/product/productSlice';
 import { useShowMessage } from 'shared/hooks/useShowMessage';
@@ -38,6 +38,16 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
 
   const [postStatistics] = usePostStatisticsMutation();
 
+  const markupDataSource = useMemo(() => {
+    if (!markupData) {
+      return [];
+    } else {
+      return markupData.items
+        .sort((a, b) => a.product_id - b.product_id)
+        .map((item, index) => ({ ...item, currentIndex: index + 1 }));
+    }
+  }, [markupData]);
+
   useEffect(() => {
     if (isMarkable(product.state)) {
       getMarkup({ productId: product.dealerprice.id });
@@ -56,6 +66,10 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
             setCurrentSession({
               ...currentSession,
               successMarkups: currentSession.failedMarkups + 1,
+              queueVariants: [
+                ...currentSession.queueVariants,
+                selectedProductVariant.currentIndex,
+              ],
             }),
           );
           return;
@@ -165,7 +179,7 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
   return {
     product,
     isMarkupLoading,
-    markupData,
+    markupDataSource,
     isConfirmOpen,
     contextHolder,
     selectedProductVariant,
