@@ -3,7 +3,7 @@ import './ProductPage.scss';
 import { ProductCard } from 'ui/ProductCard/ProductCard';
 import { ProductList } from 'ui/ProductList/ProductList';
 import { productSelector } from 'store/product/productSelectors';
-import { Button, Modal, Spin } from 'antd';
+import { Button, Spin } from 'antd';
 import {
   CheckOutlined,
   CloseOutlined,
@@ -19,13 +19,10 @@ export const ProductPage = () => {
   const {
     isMarkupLoading,
     markupDataSource,
-    isConfirmOpen,
     contextHolder,
     selectedProductVariant,
-    setIsConfirmOpen,
     handleMarkup,
     handleStatistic,
-    handleOkConfirm,
     handleSelectionChange,
   } = useProductPage({ product });
 
@@ -91,28 +88,9 @@ export const ProductPage = () => {
                 Отложить
               </Button>
             </div>
-
-            {!isMarkable(product.state) && (
-              <Button
-                style={{ margin: 16 }}
-                onClick={() => setIsConfirmOpen(true)}
-              >
-                Сбросить разметку
-              </Button>
-            )}
           </section>
         </div>
       </main>
-      <Modal
-        title="Сбросить разметку"
-        centered
-        className="dealers-confirm"
-        open={isConfirmOpen}
-        onOk={handleOkConfirm}
-        onCancel={() => setIsConfirmOpen(false)}
-      >
-        Разметка будет сброшена, продолжить?
-      </Modal>
     </section>
   );
 };
