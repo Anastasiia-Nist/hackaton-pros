@@ -28,10 +28,6 @@ const items: MenuProps['items'] = [
   getItem('Меню', 'menu', null, [
     getItem('На главную', '/'),
     getItem('Статистика', '/statistics'),
-    getItem('Профиль', 'profile', null, [
-      getItem('Аккаунт', '/profile'),
-      getItem('Выйти', '/logout'),
-    ]),
   ]),
 
   { type: 'divider' },

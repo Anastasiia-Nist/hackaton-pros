@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
 
-export type MarkupState = {
+export type CurrentSession = {
   queueVariants: Array<number>;
   markedCount: number;
   successMarkups: number;
@@ -10,7 +10,7 @@ export type MarkupState = {
   date: string;
 } | null;
 
-const initialState: MarkupState = {
+const initialState: CurrentSession = {
   queueVariants: [],
   markedCount: 0,
   successMarkups: 0,

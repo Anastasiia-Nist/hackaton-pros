@@ -7,6 +7,7 @@ export type Markup = {
   queue: number;
   quality: number;
   id: number;
+  currentIndex?: number;
 };
 
 export type MarkupState = {
