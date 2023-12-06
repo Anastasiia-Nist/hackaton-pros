@@ -65,7 +65,7 @@ export const ProductPage = () => {
                 style={{ margin: 16, width: 200 }}
                 onClick={() => console.log(product.dealerprice)}
               >
-                Предыдущий товар
+                Предыдущий
               </Button>
             </div>
             <div>
@@ -106,7 +106,7 @@ export const ProductPage = () => {
               style={{ margin: 16, width: 200 }}
               onClick={() => console.log(product.dealerprice)}
             >
-              Следующий товар
+              Следующий
             </Button>
           </section>
         </div>

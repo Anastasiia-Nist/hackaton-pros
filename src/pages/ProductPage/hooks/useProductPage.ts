@@ -40,9 +40,21 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
     if (!markupData) {
       return [];
     } else {
-      return markupData.items
-        .sort((a, b) => a.quality - b.quality)
-        .map((item, index) => ({ ...item, currentIndex: index + 1 }));
+      // let markedData = markupData.items
+      //   .sort((a, b) => a.quality - b.quality)
+      //   .map((item, index) => ({ ...item, currentIndex: index + 1 }));
+      // const markedData = [];
+      // if (!product.marked_product) {
+      //   return markedData;
+      // }
+      // const markedItem = markedData.find(
+      //   (item) => item.product_id === product.marked_product?.id,
+      // );
+      // if (!markedItem) {
+      //   markedData = [product.marked_product, ...markedData];
+      // }
+      // setSelectedProductVariant(markedItem);
+      return [];
     }
   }, [markupData]);
 

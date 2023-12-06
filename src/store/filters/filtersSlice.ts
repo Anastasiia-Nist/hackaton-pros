@@ -10,8 +10,8 @@ export type MainTableFilter = {
     value: MarkupType;
   };
   dateRange: {
-    dateFrom: string;
-    dateTo: string;
+    dateFrom: string | undefined;
+    dateTo: string | undefined;
   };
   dealer: {
     value: string;

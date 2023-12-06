@@ -16,7 +16,7 @@ export const dealersApi = createApi({
     getDealers: builder.mutation<DealersState, { page: number; size: number }>({
       query(arg) {
         return {
-          url: 'dealer/',
+          url: 'api/v1/dealer/',
           params: { ...arg },
         };
       },

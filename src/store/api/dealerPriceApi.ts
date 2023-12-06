@@ -31,7 +31,7 @@ export const dealerPriceApi = createApi({
     getDealerpriceAll: builder.mutation<DealerPriceState, GetDealerPriceAll>({
       query(arg) {
         return {
-          url: 'dealerprice/',
+          url: 'api/v1/dealerprice/',
           params: { ...arg },
         };
       },
@@ -47,7 +47,7 @@ export const dealerPriceApi = createApi({
     getDealerprice: builder.mutation<DealerPriceState, GetDealerPrice>({
       query({ dealer_id, page, size }) {
         return {
-          url: `dealerprice/${dealer_id}`,
+          url: `api/v1/dealerprice/${dealer_id}`,
           params: { page, size },
         };
       },

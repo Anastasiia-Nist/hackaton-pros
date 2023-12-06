@@ -16,7 +16,7 @@ export const userApi = createApi({
     getUser: builder.query<User, null>({
       query() {
         return {
-          url: 'me',
+          url: 'users/me',
         };
       },
       async onQueryStarted(_, { dispatch, queryFulfilled }) {

@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { Markup } from 'store/markup/markupSlice';
 
 export type DealerPriceItem = {
   dealer: string;
+  marked_product?: Markup;
   dealerprice: {
     product_key: string;
     price: string;

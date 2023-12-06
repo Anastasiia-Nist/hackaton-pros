@@ -36,8 +36,8 @@ export const FilterContent = ({ onSubmit }: FilterContentProps) => {
   const [name, setName] = useState(nameDefault);
   const [markupState, setMarkupState] = useState(markedDefault);
   const [dateRange, setDateRange] = useState<{
-    dateFrom: string;
-    dateTo: string;
+    dateFrom: string | undefined;
+    dateTo: string | undefined;
   }>(dateRangeDefault);
   const [dealer, setDealer] = useState(dealerDefault);
   const [isReset, setIsReset] = useState(false);
@@ -84,8 +84,8 @@ export const FilterContent = ({ onSubmit }: FilterContentProps) => {
 
   const onDateRangeChange = (_: RangeValue<Dayjs>, dateStrings: string[]) => {
     setDateRange({
-      dateFrom: dateStrings.at(0) || '',
-      dateTo: dateStrings.at(1) || '',
+      dateFrom: dateStrings.at(0),
+      dateTo: dateStrings.at(1),
     });
   };
 
