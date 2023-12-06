@@ -20,7 +20,8 @@ export const MainPage = () => {
   const { currentPage, pageSize, totalCount } = useSelector(
     mainTablePaginationSelector,
   );
-  const { dataSource, handelSetFilter } = useTableDataSource();
+  const { dataSource, handelSetFilter, isLoading, isLoadingAll } =
+    useTableDataSource();
   const { currentDealer } = useSelector(dealersSelector);
 
   const handlePageChange = (page: number) => {
@@ -44,7 +45,10 @@ export const MainPage = () => {
         <div className="main-page__dealer-label">
           <p>Дилер: {currentDealer?.name || 'Не выбран'}</p>
         </div>
-        <MainTable dataSource={dataSource} />
+        <MainTable
+          dataSource={dataSource}
+          isLoading={isLoading || isLoadingAll}
+        />
         <div className="main-page__pagination">
           <Pagination
             current={currentPage}

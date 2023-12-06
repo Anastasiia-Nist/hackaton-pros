@@ -4,17 +4,14 @@ import { MarkupType as MarkupTypeValue } from 'shared/consts/constants';
 
 export type MainTableFilter = {
   name: {
-    value: string;
+    value: string | undefined;
   };
   markupState: {
-    value: MarkupType;
+    value: MarkupType | undefined;
   };
   dateRange: {
     dateFrom: string | undefined;
     dateTo: string | undefined;
-  };
-  dealer: {
-    value: string;
   };
 };
 
@@ -30,11 +27,8 @@ const mainTableInitial: MainTableFilter = {
     value: MarkupTypeValue.ALL,
   },
   dateRange: {
-    dateFrom: '',
-    dateTo: '',
-  },
-  dealer: {
-    value: '',
+    dateFrom: undefined,
+    dateTo: undefined,
   },
 };
 

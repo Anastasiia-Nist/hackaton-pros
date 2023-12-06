@@ -40,23 +40,23 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
     if (!markupData) {
       return [];
     } else {
-      // let markedData = markupData.items
-      //   .sort((a, b) => a.quality - b.quality)
-      //   .map((item, index) => ({ ...item, currentIndex: index + 1 }));
-      // const markedData = [];
-      // if (!product.marked_product) {
-      //   return markedData;
-      // }
-      // const markedItem = markedData.find(
-      //   (item) => item.product_id === product.marked_product?.id,
-      // );
-      // if (!markedItem) {
-      //   markedData = [product.marked_product, ...markedData];
-      // }
-      // setSelectedProductVariant(markedItem);
-      return [];
+      let markedData: Markup[] = markupData.items;
+
+      if (product.marked_product) {
+        const markedItem = markedData.find(
+          (item) => item.product_id === product.marked_product?.id,
+        );
+        if (!markedItem) {
+          markedData = [product.marked_product, ...markedData];
+        }
+        setSelectedProductVariant(markedItem);
+      }
+
+      return markedData
+        .sort((a, b) => a.quality - b.quality)
+        .map((item, index) => ({ ...item, currentIndex: index + 1 }));
     }
-  }, [markupData]);
+  }, [markupData, product.marked_product]);
 
   useEffect(() => {
     if (isMarkable(product.state)) {

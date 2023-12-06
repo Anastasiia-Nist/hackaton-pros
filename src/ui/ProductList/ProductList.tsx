@@ -8,17 +8,20 @@ type ProductListProps = {
   listData: Markup[];
   onSelected: (value: number) => void;
   selectedItem: number | undefined;
+  isLoading: boolean;
 };
 
 export const ProductList = ({
   listData,
   onSelected,
   selectedItem,
+  isLoading,
 }: ProductListProps) => {
   return (
     <>
       <Divider orientation="left">Список возможных совпадений</Divider>
       <Table
+        loading={isLoading}
         dataSource={listData}
         columns={columns}
         pagination={false}
