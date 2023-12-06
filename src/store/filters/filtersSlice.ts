@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-export type MarkedType = 'all' | 'marked' | 'unmarked';
+import type { MarkupType } from 'shared/consts/constants';
+import { MarkupType as MarkupTypeValue } from 'shared/consts/constants';
 
 export type MainTableFilter = {
   name: {
     value: string;
   };
-  marked: {
-    value: MarkedType;
+  markupState: {
+    value: MarkupType;
   };
   dateRange: {
     dateFrom: string;
@@ -26,8 +26,8 @@ const mainTableInitial: MainTableFilter = {
   name: {
     value: '',
   },
-  marked: {
-    value: 'all',
+  markupState: {
+    value: MarkupTypeValue.ALL,
   },
   dateRange: {
     dateFrom: '',
