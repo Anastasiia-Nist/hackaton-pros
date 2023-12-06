@@ -16,25 +16,38 @@ import { setProduct } from 'store/product/productSlice';
 import { dealersSelector } from 'store/dealers/dealersSelectors';
 import { MainTableFilter } from 'store/filters/filtersSlice';
 import { MarkupType } from 'shared/consts/constants';
+import { mainTableFilterSelector } from 'store/filters/filtersSelectors';
 
 type UseTableResult = {
   dataSource: MainTableDataType[];
   handelSetFilter: (values: MainTableFilter) => void;
+  isLoadingAll: boolean;
+  isLoading: boolean;
 };
 
 export const useTableDataSource = (): UseTableResult => {
   const dispatch = useAppDispatch();
-  const [getDealerpriceAll] = useGetDealerpriceAllMutation();
-  const [getDealerPrice] = useGetDealerpriceMutation();
+  const [getDealerpriceAll, { isLoading: isLoadingAll }] =
+    useGetDealerpriceAllMutation();
+  const [getDealerPrice, { isLoading }] = useGetDealerpriceMutation();
   const { currentPage, pageSize } = useSelector(mainTablePaginationSelector);
   const dealerPrice = useSelector(dealerPriceSelector);
   const { currentDealer } = useSelector(dealersSelector);
+  const filter = useSelector(mainTableFilterSelector);
 
   useEffect(() => {
+    const state =
+      filter.markupState.value === MarkupType.ALL
+        ? undefined
+        : filter.markupState.value;
     if (!currentDealer) {
       getDealerpriceAll({
         page: currentPage,
         size: pageSize,
+        name: filter.name.value,
+        state,
+        start_date: filter.dateRange.dateFrom,
+        end_date: filter.dateRange.dateTo,
       });
       return;
     }
@@ -43,6 +56,10 @@ export const useTableDataSource = (): UseTableResult => {
       dealer_id: currentDealer.id,
       page: currentPage,
       size: pageSize,
+      name: filter.name.value,
+      state,
+      start_date: filter.dateRange.dateFrom,
+      end_date: filter.dateRange.dateTo,
     });
   }, [getDealerpriceAll, getDealerPrice, currentPage, pageSize, currentDealer]);
 
@@ -55,16 +72,17 @@ export const useTableDataSource = (): UseTableResult => {
     markupState,
     dateRange,
   }: MainTableFilter) => {
+    const state =
+      markupState.value === MarkupType.ALL ? undefined : markupState.value;
     if (currentDealer) {
-      const state =
-        markupState.value === MarkupType.ALL ? undefined : markupState.value;
       await getDealerPrice({
         dealer_id: currentDealer.id,
         page: currentPage,
         size: pageSize,
         name: name.value,
         state,
-        ...dateRange,
+        start_date: dateRange.dateFrom,
+        end_date: dateRange.dateTo,
       });
       return;
     }
@@ -73,8 +91,9 @@ export const useTableDataSource = (): UseTableResult => {
       page: currentPage,
       size: pageSize,
       name: name.value,
-      state: markupState.value,
-      ...dateRange,
+      state,
+      start_date: dateRange.dateFrom,
+      end_date: dateRange.dateTo,
     });
   };
 
@@ -97,5 +116,7 @@ export const useTableDataSource = (): UseTableResult => {
       };
     }),
     handelSetFilter,
+    isLoadingAll,
+    isLoading,
   };
 };

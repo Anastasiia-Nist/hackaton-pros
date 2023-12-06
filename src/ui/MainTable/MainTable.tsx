@@ -4,8 +4,16 @@ import { columns } from './model/consts/consts';
 
 type MainTableProps = {
   dataSource: MainTableDataType[];
+  isLoading: boolean;
 };
 
-export const MainTable = ({ dataSource }: MainTableProps) => {
-  return <Table columns={columns} dataSource={dataSource} pagination={false} />;
+export const MainTable = ({ dataSource, isLoading }: MainTableProps) => {
+  return (
+    <Table
+      columns={columns}
+      loading={isLoading}
+      dataSource={dataSource}
+      pagination={false}
+    />
+  );
 };
