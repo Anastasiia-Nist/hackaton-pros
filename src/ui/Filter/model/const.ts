@@ -1,21 +1,25 @@
-import { MarkedType } from 'store/filters/filtersSlice';
+import { MarkupType, MarkupTypeText } from 'shared/consts/constants';
 
 export type MarkedValues = {
   label: string;
-  value: MarkedType;
+  value: MarkupType;
 };
 
 export const markedValues = [
   {
-    label: 'Все',
-    value: 'all',
+    label: MarkupTypeText[MarkupType.ALL],
+    value: MarkupType.ALL,
   },
   {
-    label: 'Отмеченные',
-    value: 'marked',
+    label: MarkupTypeText[MarkupType.YES],
+    value: MarkupType.YES,
   },
   {
-    label: 'Не отмеченные',
-    value: 'unmarked',
+    label: MarkupTypeText[MarkupType.NO],
+    value: MarkupType.NO,
+  },
+  {
+    label: MarkupTypeText[MarkupType.DEFFERED],
+    value: MarkupType.DEFFERED,
   },
 ];

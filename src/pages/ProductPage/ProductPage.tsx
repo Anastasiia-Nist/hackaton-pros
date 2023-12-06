@@ -3,11 +3,13 @@ import './ProductPage.scss';
 import { ProductCard } from 'ui/ProductCard/ProductCard';
 import { ProductList } from 'ui/ProductList/ProductList';
 import { productSelector } from 'store/product/productSelectors';
-import { Button, Modal, Spin } from 'antd';
+import { Button, Spin } from 'antd';
 import {
   CheckOutlined,
   CloseOutlined,
   LoadingOutlined,
+  LeftOutlined,
+  RightOutlined,
 } from '@ant-design/icons';
 import clsx from 'clsx';
 import { isMarkable } from './utils/utils';
@@ -19,13 +21,10 @@ export const ProductPage = () => {
   const {
     isMarkupLoading,
     markupDataSource,
-    isConfirmOpen,
     contextHolder,
     selectedProductVariant,
-    setIsConfirmOpen,
     handleMarkup,
     handleStatistic,
-    handleOkConfirm,
     handleSelectionChange,
   } = useProductPage({ product });
 
@@ -61,6 +60,16 @@ export const ProductPage = () => {
           >
             <div>
               <Button
+                className="markup-controls__button"
+                icon={<LeftOutlined />}
+                style={{ margin: 16, width: 200 }}
+                onClick={() => console.log(product.dealerprice)}
+              >
+                Предыдущий
+              </Button>
+            </div>
+            <div>
+              <Button
                 className="markup-controls__button markup-controls__button_type_yes"
                 type="primary"
                 icon={<CheckOutlined />}
@@ -91,28 +100,17 @@ export const ProductPage = () => {
                 Отложить
               </Button>
             </div>
-
-            {!isMarkable(product.state) && (
-              <Button
-                style={{ margin: 16 }}
-                onClick={() => setIsConfirmOpen(true)}
-              >
-                Сбросить разметку
-              </Button>
-            )}
+            <Button
+              className="markup-controls__button"
+              icon={<RightOutlined />}
+              style={{ margin: 16, width: 200 }}
+              onClick={() => console.log(product.dealerprice)}
+            >
+              Следующий
+            </Button>
           </section>
         </div>
       </main>
-      <Modal
-        title="Сбросить разметку"
-        centered
-        className="dealers-confirm"
-        open={isConfirmOpen}
-        onOk={handleOkConfirm}
-        onCancel={() => setIsConfirmOpen(false)}
-      >
-        Разметка будет сброшена, продолжить?
-      </Modal>
     </section>
   );
 };

@@ -9,19 +9,24 @@ import 'dayjs/locale/ru';
 import { markedValues } from '../model/const';
 import { mainTableFilterSelector } from 'store/filters/filtersSelectors';
 import {
-  MarkedType,
+  MainTableFilter,
   resetMainTableFilter,
   setMainTableFilter,
 } from 'store/filters/filtersSlice';
 import { RangeValue } from '../model/types';
+import { MarkupType } from 'shared/consts/constants';
 
 const { RangePicker } = DatePicker;
 
-export const FilterContent = () => {
+type FilterContentProps = {
+  onSubmit: (values: MainTableFilter) => void;
+};
+
+export const FilterContent = ({ onSubmit }: FilterContentProps) => {
   const dispatch = useDispatch();
   const {
     name: nameDefault,
-    marked: markedDefault,
+    markupState: markedDefault,
     dateRange: dateRangeDefault,
     dealer: dealerDefault,
   } = useSelector(mainTableFilterSelector);
@@ -29,10 +34,11 @@ export const FilterContent = () => {
   const [form] = Form.useForm();
 
   const [name, setName] = useState(nameDefault);
-  const [marked, setMarked] = useState(markedDefault);
-  const [dateRange, setDateRange] = useState<
-    Record<string, string | undefined> | undefined
-  >(dateRangeDefault);
+  const [markupState, setMarkupState] = useState(markedDefault);
+  const [dateRange, setDateRange] = useState<{
+    dateFrom: string | undefined;
+    dateTo: string | undefined;
+  }>(dateRangeDefault);
   const [dealer, setDealer] = useState(dealerDefault);
   const [isReset, setIsReset] = useState(false);
 
@@ -50,7 +56,7 @@ export const FilterContent = () => {
 
   const resetFieldsStates = useCallback(() => {
     setName(nameDefault);
-    setMarked(markedDefault);
+    setMarkupState(markedDefault);
     setDateRange(dateRangeDefault);
     setDealer(dealerDefault);
   }, [nameDefault, markedDefault, dateRangeDefault, dealerDefault]);
@@ -64,15 +70,16 @@ export const FilterContent = () => {
   };
 
   const handleSubmit = () => {
-    dispatch(setMainTableFilter({ name, marked, dateRange, dealer }));
+    dispatch(setMainTableFilter({ name, markupState, dateRange, dealer }));
+    onSubmit({ name, markupState, dateRange, dealer });
   };
 
   const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName({ value: event.target.value });
   };
 
-  const onMarkedChange = (val: MarkedType) => {
-    setMarked({ value: val });
+  const onMarkedChange = (val: MarkupType) => {
+    setMarkupState({ value: val });
   };
 
   const onDateRangeChange = (_: RangeValue<Dayjs>, dateStrings: string[]) => {

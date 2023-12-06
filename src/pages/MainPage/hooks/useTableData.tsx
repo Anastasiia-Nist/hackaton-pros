@@ -14,8 +14,15 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch } from 'store/store';
 import { setProduct } from 'store/product/productSlice';
 import { dealersSelector } from 'store/dealers/dealersSelectors';
+import { MainTableFilter } from 'store/filters/filtersSlice';
+import { MarkupType } from 'shared/consts/constants';
 
-export const useTableDataSource = (): MainTableDataType[] => {
+type UseTableResult = {
+  dataSource: MainTableDataType[];
+  handelSetFilter: (values: MainTableFilter) => void;
+};
+
+export const useTableDataSource = (): UseTableResult => {
   const dispatch = useAppDispatch();
   const [getDealerpriceAll] = useGetDealerpriceAllMutation();
   const [getDealerPrice] = useGetDealerpriceMutation();
@@ -43,21 +50,52 @@ export const useTableDataSource = (): MainTableDataType[] => {
     dispatch(setProduct(product));
   };
 
-  return dealerPrice.items.map((item: DealerPriceItem) => {
-    return {
-      ...item.dealerprice,
-      productName: (
-        <Link
-          to={RoutePath[AppRoutes.PRODUCT]}
-          onClick={() => handleProductClick(item)}
-        >
-          {item.dealerprice?.product_name}
-        </Link>
-      ),
-      markedStatus: <MarkedStatus state={item.state} />,
-      key: item.dealerprice?.id,
-      dealer: item.dealer,
-      state: item.state,
-    };
-  });
+  const handelSetFilter = async ({
+    name,
+    markupState,
+    dateRange,
+  }: MainTableFilter) => {
+    if (currentDealer) {
+      const state =
+        markupState.value === MarkupType.ALL ? undefined : markupState.value;
+      await getDealerPrice({
+        dealer_id: currentDealer.id,
+        page: currentPage,
+        size: pageSize,
+        name: name.value,
+        state,
+        ...dateRange,
+      });
+      return;
+    }
+
+    await getDealerpriceAll({
+      page: currentPage,
+      size: pageSize,
+      name: name.value,
+      state: markupState.value,
+      ...dateRange,
+    });
+  };
+
+  return {
+    dataSource: dealerPrice.items.map((item: DealerPriceItem) => {
+      return {
+        ...item.dealerprice,
+        productName: (
+          <Link
+            to={RoutePath[AppRoutes.PRODUCT]}
+            onClick={() => handleProductClick(item)}
+          >
+            {item.dealerprice?.product_name}
+          </Link>
+        ),
+        markedStatus: <MarkedStatus state={item.state} />,
+        key: item.dealerprice?.id,
+        dealer: item.dealer,
+        state: item.state,
+      };
+    }),
+    handelSetFilter,
+  };
 };

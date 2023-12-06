@@ -5,6 +5,18 @@ import {
   setDealerPrice,
 } from 'store/dealerPrice/dealerPriceSlice';
 
+type GetDealerPrice = {
+  dealer_id: number;
+  page: number;
+  size: number;
+  name?: string;
+  state?: string;
+  start_date?: string;
+  end_date?: string;
+};
+
+type GetDealerPriceAll = Omit<GetDealerPrice, 'dealer_id'>;
+
 export const dealerPriceApi = createApi({
   reducerPath: 'dealerPriceApi',
   baseQuery: fetchBaseQuery({
@@ -16,13 +28,10 @@ export const dealerPriceApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getDealerpriceAll: builder.mutation<
-      DealerPriceState,
-      { page: number; size: number }
-    >({
+    getDealerpriceAll: builder.mutation<DealerPriceState, GetDealerPriceAll>({
       query(arg) {
         return {
-          url: 'dealerprice/',
+          url: 'api/v1/dealerprice/',
           params: { ...arg },
         };
       },
@@ -35,13 +44,10 @@ export const dealerPriceApi = createApi({
         }
       },
     }),
-    getDealerprice: builder.mutation<
-      DealerPriceState,
-      { dealer_id: number; page: number; size: number }
-    >({
+    getDealerprice: builder.mutation<DealerPriceState, GetDealerPrice>({
       query({ dealer_id, page, size }) {
         return {
-          url: `dealerprice/${dealer_id}`,
+          url: `api/v1/dealerprice/${dealer_id}`,
           params: { page, size },
         };
       },

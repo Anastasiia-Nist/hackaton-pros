@@ -21,7 +21,6 @@ type UseProductPageProps = {
 };
 
 export const useProductPage = ({ product }: UseProductPageProps) => {
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [selectedProductVariant, setSelectedProductVariant] = useState<
     Markup | undefined
   >(undefined);
@@ -33,8 +32,7 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
   const [getMarkup, { isLoading: isMarkupLoading, data: markupData }] =
     useGetMarkupMutation();
   const [postMarkup] = usePostMarkupMutation();
-  const [deleteMarkup, { isSuccess: isDeleteSuccess }] =
-    useDeleteMarkupMutation();
+  const [deleteMarkup] = useDeleteMarkupMutation();
 
   const [postStatistics] = usePostStatisticsMutation();
 
@@ -42,9 +40,21 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
     if (!markupData) {
       return [];
     } else {
-      return markupData.items
-        .sort((a, b) => a.product_id - b.product_id)
-        .map((item, index) => ({ ...item, currentIndex: index + 1 }));
+      // let markedData = markupData.items
+      //   .sort((a, b) => a.quality - b.quality)
+      //   .map((item, index) => ({ ...item, currentIndex: index + 1 }));
+      // const markedData = [];
+      // if (!product.marked_product) {
+      //   return markedData;
+      // }
+      // const markedItem = markedData.find(
+      //   (item) => item.product_id === product.marked_product?.id,
+      // );
+      // if (!markedItem) {
+      //   markedData = [product.marked_product, ...markedData];
+      // }
+      // setSelectedProductVariant(markedItem);
+      return [];
     }
   }, [markupData]);
 
@@ -124,10 +134,10 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
       await handlePostMarkup(product);
       await handlePostStatistic(
         markupType,
-        selectedProductVariant?.product_id,
+        selectedProductVariant?.id,
         product,
       );
-      dispatch(setProduct({ ...product, is_marked: markupType }));
+      dispatch(setProduct({ ...product, state: markupType }));
     },
     [
       handlePostMarkup,
@@ -140,53 +150,67 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
 
   const handleStatistic = useCallback(
     async (markupType: string) => {
+      if (markupType === MarkupType.YES) {
+        await deleteMarkup({ productdealerkey_id: product.dealerprice.id });
+      }
       await handlePostStatistic(
         markupType,
-        selectedProductVariant?.product_id,
+        selectedProductVariant?.id,
         product,
       );
-      dispatch(setProduct({ ...product, is_marked: markupType }));
+      dispatch(setProduct({ ...product, state: markupType }));
     },
-    [handlePostStatistic, selectedProductVariant, product, dispatch],
+    [
+      handlePostStatistic,
+      selectedProductVariant?.id,
+      product,
+      dispatch,
+      deleteMarkup,
+    ],
   );
 
-  const handleOkConfirm = async () => {
-    await deleteMarkup({ productdealerkey_id: product.dealerprice.id });
-
-    if (!isDeleteSuccess) {
-      setSelectedProductVariant(undefined);
-      dispatch(setProduct({ ...product, is_marked: undefined }));
-      getMarkup({ productId: product.dealerprice.id });
-      setIsConfirmOpen(false);
-      showMessage('success', 'Разметка удалена');
-      return;
+  const handleDeffer = async () => {
+    if (product.state === MarkupType.YES) {
+      await deleteMarkup({ productdealerkey_id: product.dealerprice.id });
     }
-
-    showMessage('error', 'Не удалось удалить разметку');
+    await handlePostStatistic(
+      MarkupType.DEFFERED,
+      selectedProductVariant?.id,
+      product,
+    );
+    setSelectedProductVariant(undefined);
+    dispatch(setProduct({ ...product, state: MarkupType.DEFFERED }));
   };
 
-  const handleSelectionChange = (value: number) => {
+  const handleSelectionChange = async (value: number) => {
     if (value === selectedProductVariant?.product_id) {
-      setSelectedProductVariant(undefined);
-      return;
+      try {
+        await handleDeffer();
+        return;
+      } catch {
+        showMessage('error', 'Не удалось изменить разметку');
+        return;
+      }
     }
 
-    setSelectedProductVariant(
-      markupData?.items.find((item) => item.product_id === value),
-    );
+    const markup = markupData?.items.find((item) => item.product_id === value);
+
+    setSelectedProductVariant(markup);
+
+    if (product.state === MarkupType.YES) {
+      await deleteMarkup({ productdealerkey_id: product.dealerprice.id });
+      await handleMarkup(product.state);
+    }
   };
 
   return {
     product,
     isMarkupLoading,
     markupDataSource,
-    isConfirmOpen,
     contextHolder,
     selectedProductVariant,
-    setIsConfirmOpen,
     handleMarkup,
     handleStatistic,
-    handleOkConfirm,
     handleSelectionChange,
   };
 };

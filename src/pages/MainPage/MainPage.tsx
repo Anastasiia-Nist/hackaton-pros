@@ -20,7 +20,7 @@ export const MainPage = () => {
   const { currentPage, pageSize, totalCount } = useSelector(
     mainTablePaginationSelector,
   );
-  const dataSource = useTableDataSource();
+  const { dataSource, handelSetFilter } = useTableDataSource();
   const { currentDealer } = useSelector(dealersSelector);
 
   const handlePageChange = (page: number) => {
@@ -33,12 +33,13 @@ export const MainPage = () => {
     dispatch(setMainTablePageSize(pageSize));
     dispatch(setMainTableCurrentPage(1));
   };
+
   return (
     <section className="main-page" aria-label="Главная страница">
       <main className="main-page__main">
         <div className="main-page__controls">
           <Button onClick={() => setIsDealersOpen(true)}>Выбрать дилера</Button>
-          <Filter className="main-page__filter" />
+          <Filter className="main-page__filter" onSubmit={handelSetFilter} />
         </div>
         <div className="main-page__dealer-label">
           <p>Дилер: {currentDealer?.name || 'Не выбран'}</p>

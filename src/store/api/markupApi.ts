@@ -22,7 +22,7 @@ export const markupApi = createApi({
     getMarkup: builder.mutation<MarkupState, { productId: number }>({
       query(arg) {
         return {
-          url: `markup/${arg.productId}`,
+          url: `api/v1/markup/${arg.productId}`,
         };
       },
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
@@ -37,7 +37,7 @@ export const markupApi = createApi({
     postMarkup: builder.mutation<{ id: number }, MarkupFuncProps>({
       query(arg) {
         return {
-          url: `productdealerkey`,
+          url: `api/v1/productdealerkey`,
           method: 'POST',
           body: arg,
         };
@@ -46,7 +46,7 @@ export const markupApi = createApi({
     patchMarkup: builder.mutation<{ id: number }, MarkupFuncProps>({
       query(arg) {
         return {
-          url: `productdealerkey/${arg.key}`,
+          url: `api/v1/productdealerkey/${arg.key}`,
           method: 'POST',
           body: arg,
         };
