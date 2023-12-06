@@ -18,6 +18,7 @@ import { markupApi } from './api/markupApi';
 import { statisticsApi } from './api/statisticsApi';
 import currentSessionSlice from './currentSession/currentSessionSlice';
 import { TOKEN } from 'shared/consts/constants';
+import dayjs from 'dayjs';
 
 (() => {
   localStorage.setItem('token', TOKEN);
@@ -35,6 +36,14 @@ const loadFromLocalStorage = () => {
   try {
     const savedStoreStr = localStorage.getItem('store');
     const savedStore = savedStoreStr ? JSON.parse(savedStoreStr) : {};
+    if ('currentSession' in savedStore && savedStore.currentSession) {
+      if (dayjs(savedStore.currentSession.date).isBefore(dayjs())) {
+        delete savedStore.currentSession;
+      }
+    } else {
+      delete savedStore.currentSession;
+    }
+
     return savedStore;
   } catch (error) {
     console.log(error);
