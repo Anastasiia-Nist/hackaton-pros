@@ -8,6 +8,8 @@ import {
   CheckOutlined,
   CloseOutlined,
   LoadingOutlined,
+  LeftOutlined,
+  RightOutlined,
 } from '@ant-design/icons';
 import clsx from 'clsx';
 import { isMarkable } from './utils/utils';
@@ -58,6 +60,16 @@ export const ProductPage = () => {
           >
             <div>
               <Button
+                className="markup-controls__button"
+                icon={<LeftOutlined />}
+                style={{ margin: 16, width: 200 }}
+                onClick={() => console.log(product.dealerprice)}
+              >
+                Предыдущий товар
+              </Button>
+            </div>
+            <div>
+              <Button
                 className="markup-controls__button markup-controls__button_type_yes"
                 type="primary"
                 icon={<CheckOutlined />}
@@ -88,6 +100,14 @@ export const ProductPage = () => {
                 Отложить
               </Button>
             </div>
+            <Button
+              className="markup-controls__button"
+              icon={<RightOutlined />}
+              style={{ margin: 16, width: 200 }}
+              onClick={() => console.log(product.dealerprice)}
+            >
+              Следующий товар
+            </Button>
           </section>
         </div>
       </main>
