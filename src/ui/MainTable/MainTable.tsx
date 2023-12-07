@@ -12,7 +12,7 @@ export const MainTable = ({ dataSource, isLoading }: MainTableProps) => {
     <Table
       columns={columns}
       loading={isLoading}
-      dataSource={dataSource}
+      dataSource={[...dataSource]}
       pagination={false}
     />
   );

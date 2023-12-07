@@ -64,7 +64,7 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
           ...item.product,
           currentIndex: index + 1,
           quality: +(item.markup.quality * 100).toFixed(2),
-          key: item.markup.product_id,
+          key: item.markup.id,
         }));
       return result;
     }
