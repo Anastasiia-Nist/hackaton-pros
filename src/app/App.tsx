@@ -6,6 +6,7 @@ import { Header } from 'ui/Header/Header';
 import { Footer } from 'ui/Footer/Footer';
 import { RegistrationPopup } from 'ui/RegistrationPopup/RegistrationPopup';
 import { LoginPopup } from 'ui/LoginPopup/LoginPopup';
+import { SettingsPage } from 'pages/SettingsPage/SettingsPage';
 
 export const App = () => {
   return (
@@ -15,6 +16,7 @@ export const App = () => {
         <Route path="/" element={<MainPage />} />
         <Route path="/product" element={<ProductPage />} />
         <Route path="/statistics" element={<StatisticsPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
       </Routes>
       <Footer />
 

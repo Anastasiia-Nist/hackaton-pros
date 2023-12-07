@@ -1,0 +1,20 @@
+@import '../../styles/constants.scss';
+@import '../../styles/mixines.scss';
+
+.settings-page {
+  @include main-container;
+  display: flex;
+  flex-direction: column;
+
+  &__main {
+    flex-grow: 1;
+    align-items: center;
+    padding: 40px;
+  }
+
+  &__title {
+    @include accent-title-typography;
+    margin-bottom: 20px;
+    color: $color-main-darker;
+  }
+}

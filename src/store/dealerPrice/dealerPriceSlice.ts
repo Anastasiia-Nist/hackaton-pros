@@ -14,6 +14,7 @@ export type DealerPriceItem = {
     id: number;
   };
   state: string;
+  currentIndex: number;
 };
 
 export type DealerPriceItemFlat = {
@@ -26,6 +27,7 @@ export type DealerPriceItemFlat = {
   dealer_id: number;
   id: number;
   state: string;
+  currentIndex: number;
 };
 
 export type DealerPriceState = {
@@ -44,12 +46,21 @@ const initialState: DealerPriceState = {
   pages: 0,
 };
 
+type ActionType = {
+  type: string;
+  payload: DealerPriceState;
+};
+
 const dealerPriceSlice = createSlice({
   name: 'dealerPrice',
   initialState,
   reducers: {
-    setDealerPrice(state, action) {
-      state = action.payload;
+    setDealerPrice(state, action: ActionType) {
+      const items = action.payload.items.map((item, index) => ({
+        ...item,
+        currentIndex: index,
+      }));
+      state = { ...action.payload, items };
       return state;
     },
   },
