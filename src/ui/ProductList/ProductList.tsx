@@ -25,7 +25,7 @@ export const ProductList = ({
         dataSource={listData}
         columns={columns}
         pagination={false}
-        scroll={{ y: 160 }}
+        scroll={{ y: 230 }}
         rowSelection={{
           type: 'radio',
           selectedRowKeys: [selectedItem as Key],
