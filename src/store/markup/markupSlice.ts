@@ -1,12 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export type Markup = {
+export type MarkupParams = {
   key: number;
   product_id: number;
   create_date: string;
   queue: number;
   quality: number;
   id: number;
+};
+
+export type MarkupProduct = {
+  article: string;
+  name: string;
+};
+
+export type Markup = {
+  markup: MarkupParams;
+  product: MarkupProduct;
   currentIndex?: number;
 };
 

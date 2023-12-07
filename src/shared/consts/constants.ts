@@ -10,6 +10,18 @@ export enum MarkupType {
   ALL = 'ALL',
 }
 
+export enum StaticticMarkupType {
+  YES = 'да',
+  NO = 'нет',
+  DEFFERED = 'отложить',
+}
+
+export const StatisticToProductState = {
+  [StaticticMarkupType.YES]: MarkupType.YES,
+  [StaticticMarkupType.NO]: MarkupType.NO,
+  [StaticticMarkupType.DEFFERED]: MarkupType.DEFFERED,
+};
+
 export const MarkupTypeText = {
   [MarkupType.YES]: 'Размечено',
   [MarkupType.NO]: 'Нет совпадений',

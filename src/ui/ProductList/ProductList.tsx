@@ -1,11 +1,11 @@
 import { Divider, Table } from 'antd';
-import type { Markup } from 'store/markup/markupSlice';
 import './ProductList.scss';
 import { columns } from './model/consts/consts';
 import { Key } from 'antd/es/table/interface';
+import { ProductListType } from './model/types/types';
 
 type ProductListProps = {
-  listData: Markup[];
+  listData: ProductListType[];
   onSelected: (value: number) => void;
   selectedItem: number | undefined;
   isLoading: boolean;
