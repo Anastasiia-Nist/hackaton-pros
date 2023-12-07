@@ -1,65 +1,27 @@
 import { useSelector } from 'react-redux';
 import './StatisticsPage.scss';
 import { currentSessionSelector } from 'store/currentSession/currentSessionSelectors';
-import { useGetDealerpriceAllMutation } from 'store/api/dealerPriceApi';
 import { Tabs, Spin } from 'antd';
 import { TabsProps } from 'antd/lib';
 import { LoadingOutlined } from '@ant-design/icons';
-import { useMemo, useEffect, useState, useCallback } from 'react';
+import { useMemo, useEffect, useState } from 'react';
+import { useGetStatisticsMutation } from 'store/api/statisticsApi';
 
 export const StatisticsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [getDealerpriceAll, { data }] = useGetDealerpriceAllMutation();
+  const [getStatistics, { data }] = useGetStatisticsMutation();
   const currentSession = useSelector(currentSessionSelector);
-  const [allMarks, setAllMarks] = useState({
-    all: 0,
-    null: 0,
-    yes: 0,
-    no: 0,
-    def: 0,
-  });
 
-  const getData = useCallback(async () => {
-    await getDealerpriceAll({ page: 1, size: 100 });
-    for (let i = 2; i <= 30; i++) {
-      await getDealerpriceAll({ page: i, size: 100 });
-    }
-    setIsLoading(false);
-  }, [getDealerpriceAll]);
-
-  useEffect(() => {
-    if (data) {
-      setAllMarks((prev) => ({
-        all:
-          data.items.filter((i) => {
-            return (
-              i.state === 'да' || i.state === 'нет' || i.state === 'отложить'
-            );
-          }).length + prev.all,
-        null:
-          data.items.filter((i) => {
-            return i.state === null;
-          }).length + prev.null,
-        yes:
-          data.items.filter((i) => {
-            return i.state === 'да';
-          }).length + prev.yes,
-        no:
-          data.items.filter((i) => {
-            return i.state === 'нет';
-          }).length + prev.no,
-        def:
-          data.items.filter((i) => {
-            return i.state === 'отложить';
-          }).length + prev.def,
-      }));
-    }
+  const processed = useMemo(() => {
+    const yes = data?.at(0)?.yes || 0;
+    const no = data?.at(0)?.no || 0;
+    return yes + no;
   }, [data]);
 
   useEffect(() => {
     setIsLoading(true);
-    getData();
-  }, [getData, getDealerpriceAll]);
+    getStatistics().finally(() => setIsLoading(false));
+  }, [getStatistics]);
 
   const averageQueue = useMemo(() => {
     if (currentSession.queueVariants.at(0) === undefined) {
@@ -136,28 +98,24 @@ export const StatisticsPage = () => {
               <h2 className="statistics-page__title">Общая статистика</h2>
               <ul className="statistics-page__general-session">
                 <li className="statistics-page__session-item">
-                  <h3>Размечено</h3>
-                  <p>{allMarks?.all}</p>
-                </li>
-                <li className="statistics-page__session-item">
-                  <h3>Не размечено</h3>
-                  <p>{allMarks?.null}</p>
+                  <h3>Всего обработано</h3>
+                  <p>{processed}</p>
                 </li>
                 <li className="statistics-page__session-item">
                   <h3>Удачных предсказаний</h3>
                   <p className="statistics-page__session-item-success">
-                    {allMarks?.yes}
+                    {data?.at(0)?.yes}
                   </p>
                 </li>
                 <li className="statistics-page__session-item">
                   <h3>Неудачных предсказаний</h3>
                   <p className="statistics-page__session-item-failed">
-                    {allMarks?.no}
+                    {data?.at(0)?.no}
                   </p>
                 </li>
                 <li className="statistics-page__session-item">
                   <h3>Отложенных</h3>
-                  <p>{allMarks?.def}</p>
+                  <p>{data?.at(0)?.hold}</p>
                 </li>
               </ul>
             </section>

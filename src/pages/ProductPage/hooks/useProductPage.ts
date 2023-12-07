@@ -64,7 +64,7 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
           ...item.product,
           currentIndex: index + 1,
           quality: +(item.markup.quality * 100).toFixed(2),
-          key: item.markup.id,
+          key: item.markup.product_id,
         }));
       return result;
     }
@@ -143,7 +143,14 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
 
   const handleMarkup = useCallback(
     async (markupType: string) => {
-      await deleteMarkup({ productdealerkey_id: product.dealerprice.id });
+      if (
+        product.state === StatisticToProductState[StaticticMarkupType.YES] &&
+        product.productdealerkey?.id
+      ) {
+        await deleteMarkup({
+          productdealerkey_id: product.productdealerkey?.id,
+        });
+      }
       await handlePostMarkup(product);
       await handlePostStatistic(
         markupType,
@@ -164,8 +171,14 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
 
   const handleStatistic = useCallback(
     async (markupType: string) => {
-      if (product.state === StatisticToProductState[StaticticMarkupType.YES]) {
-        await deleteMarkup({ productdealerkey_id: product.dealerprice.id });
+      console.log(product);
+      if (
+        product.state === StaticticMarkupType.YES &&
+        product.productdealerkey?.id
+      ) {
+        await deleteMarkup({
+          productdealerkey_id: product.productdealerkey?.id,
+        });
       }
       await handlePostStatistic(
         markupType,
@@ -185,8 +198,11 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
   );
 
   const handleDeffer = async () => {
-    if (product.state === StatisticToProductState[StaticticMarkupType.YES]) {
-      await deleteMarkup({ productdealerkey_id: product.dealerprice.id });
+    if (
+      product.state === StatisticToProductState[StaticticMarkupType.YES] &&
+      product.productdealerkey?.id
+    ) {
+      await deleteMarkup({ productdealerkey_id: product.productdealerkey?.id });
     }
     await handlePostStatistic(
       StaticticMarkupType.DEFFERED,
@@ -221,8 +237,11 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
       setSelectedProductVariant(undefined);
     }
 
-    if (product.state === StatisticToProductState[StaticticMarkupType.YES]) {
-      await deleteMarkup({ productdealerkey_id: product.dealerprice.id });
+    if (
+      product.state === StatisticToProductState[StaticticMarkupType.YES] &&
+      product.productdealerkey?.id
+    ) {
+      await deleteMarkup({ productdealerkey_id: product.productdealerkey?.id });
       await handleMarkup(product.state);
     }
   };
