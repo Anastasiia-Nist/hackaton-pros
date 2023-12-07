@@ -13,6 +13,7 @@ const initialState: DealerPriceItem = {
     id: 0,
   },
   state: '',
+  currentIndex: 0,
 };
 
 const productSlice = createSlice({
