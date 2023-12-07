@@ -10,7 +10,7 @@ import { setProduct } from 'store/product/productSlice';
 import { useShowMessage } from 'shared/hooks/useShowMessage';
 import { DealerPriceItem } from 'store/dealerPrice/dealerPriceSlice';
 import { isMarkable, prepareMarkup, prepareStatistics } from '../utils/utils';
-import { MarkupType } from 'shared/consts/constants';
+import { StaticticMarkupType } from 'shared/consts/constants';
 import { setCurrentSession } from 'store/currentSession/currentSessionSlice';
 import { currentSessionSelector } from 'store/currentSession/currentSessionSelectors';
 import { useSelector } from 'react-redux';
@@ -44,7 +44,8 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
 
       if (product.marked_product) {
         const markedItem = markedData.find(
-          (item) => item.product_id === product.marked_product?.id,
+          (item) =>
+            item.markup.product_id === product.marked_product?.markup.id,
         );
         if (!markedItem) {
           markedData = [product.marked_product, ...markedData];
@@ -52,9 +53,16 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
         setSelectedProductVariant(markedItem);
       }
 
-      return markedData
-        .sort((a, b) => a.quality - b.quality)
-        .map((item, index) => ({ ...item, currentIndex: index + 1 }));
+      const result = [...markedData]
+        .sort((a, b) => b.markup.quality - a.markup.quality)
+        .map((item, index) => ({
+          ...item.markup,
+          ...item.product,
+          currentIndex: index + 1,
+          quality: +(item.markup.quality * 100).toFixed(2),
+          key: item.markup.product_id,
+        }));
+      return result;
     }
   }, [markupData, product.marked_product]);
 
@@ -70,7 +78,7 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
       try {
         if (selectedProductVariant) {
           await postMarkup(
-            prepareMarkup(curProduct, selectedProductVariant.product_id),
+            prepareMarkup(curProduct, selectedProductVariant.markup.product_id),
           );
           dispatch(
             setCurrentSession({
@@ -104,7 +112,7 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
           prepareStatistics(curProduct, markupType, selectedVariant),
         );
 
-        if (markupType === MarkupType.NO) {
+        if (markupType === StaticticMarkupType.NO) {
           dispatch(
             setCurrentSession({
               ...currentSession,
@@ -113,7 +121,7 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
           );
         }
 
-        if (markupType === MarkupType.DEFFERED) {
+        if (markupType === StaticticMarkupType.DEFFERED) {
           dispatch(
             setCurrentSession({
               ...currentSession,
@@ -134,7 +142,7 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
       await handlePostMarkup(product);
       await handlePostStatistic(
         markupType,
-        selectedProductVariant?.id,
+        selectedProductVariant?.markup.id,
         product,
       );
       dispatch(setProduct({ ...product, state: markupType }));
@@ -150,19 +158,20 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
 
   const handleStatistic = useCallback(
     async (markupType: string) => {
-      if (markupType === MarkupType.YES) {
+      if (markupType !== StaticticMarkupType.YES) {
         await deleteMarkup({ productdealerkey_id: product.dealerprice.id });
       }
       await handlePostStatistic(
         markupType,
-        selectedProductVariant?.id,
+        selectedProductVariant?.markup.id,
         product,
       );
       dispatch(setProduct({ ...product, state: markupType }));
+      setSelectedProductVariant(undefined);
     },
     [
       handlePostStatistic,
-      selectedProductVariant?.id,
+      selectedProductVariant?.markup.id,
       product,
       dispatch,
       deleteMarkup,
@@ -170,20 +179,20 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
   );
 
   const handleDeffer = async () => {
-    if (product.state === MarkupType.YES) {
+    if (product.state === StaticticMarkupType.YES) {
       await deleteMarkup({ productdealerkey_id: product.dealerprice.id });
     }
     await handlePostStatistic(
-      MarkupType.DEFFERED,
-      selectedProductVariant?.id,
+      StaticticMarkupType.DEFFERED,
+      selectedProductVariant?.markup.id,
       product,
     );
     setSelectedProductVariant(undefined);
-    dispatch(setProduct({ ...product, state: MarkupType.DEFFERED }));
+    dispatch(setProduct({ ...product, state: StaticticMarkupType.DEFFERED }));
   };
 
   const handleSelectionChange = async (value: number) => {
-    if (value === selectedProductVariant?.product_id) {
+    if (value === selectedProductVariant?.markup.product_id) {
       try {
         await handleDeffer();
         return;
@@ -193,11 +202,13 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
       }
     }
 
-    const markup = markupData?.items.find((item) => item.product_id === value);
+    const markup = markupData?.items.find(
+      (item) => item.markup.product_id === value,
+    );
 
     setSelectedProductVariant(markup);
 
-    if (product.state === MarkupType.YES) {
+    if (product.state === StaticticMarkupType.YES) {
       await deleteMarkup({ productdealerkey_id: product.dealerprice.id });
       await handleMarkup(product.state);
     }

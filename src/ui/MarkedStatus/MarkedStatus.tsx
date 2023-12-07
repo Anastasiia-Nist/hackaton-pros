@@ -1,4 +1,8 @@
-import { MarkupType, MarkupTypeText } from 'shared/consts/constants';
+import {
+  MarkupType,
+  MarkupTypeText,
+  StaticticMarkupType,
+} from 'shared/consts/constants';
 import './MarkedStatus.scss';
 
 type MarkedStatusProps = {
@@ -10,7 +14,7 @@ export const MarkedStatus = ({ state }: MarkedStatusProps) => {
     return <span className="marked-status">Не размечено</span>;
   }
 
-  if (state === MarkupType.YES) {
+  if (state === MarkupType.YES || state === StaticticMarkupType.YES) {
     return (
       <span className="marked-status marked-status_success">
         {MarkupTypeText[MarkupType.YES]}
@@ -18,7 +22,7 @@ export const MarkedStatus = ({ state }: MarkedStatusProps) => {
     );
   }
 
-  if (state === MarkupType.NO) {
+  if (state === MarkupType.NO || state === StaticticMarkupType.NO) {
     return (
       <span className="marked-status marked-status_failed">
         {MarkupTypeText[MarkupType.NO]}
@@ -26,7 +30,7 @@ export const MarkedStatus = ({ state }: MarkedStatusProps) => {
     );
   }
 
-  if (state === MarkupType.DEFFERED) {
+  if (state === MarkupType.DEFFERED || state === StaticticMarkupType.DEFFERED) {
     return (
       <span className="marked-status marked-status_deffered">
         {MarkupTypeText[MarkupType.DEFFERED]}

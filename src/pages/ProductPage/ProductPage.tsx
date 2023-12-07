@@ -12,13 +12,13 @@ import {
 } from '@ant-design/icons';
 import { isMarkable } from './utils/utils';
 import { useProductPage } from './hooks/useProductPage';
-import { MarkupType } from 'shared/consts/constants';
-import { useProductSwitcher } from './hooks/useProductSwitcher';
-import { dealerPriceSelector } from 'store/dealerPrice/dealerPriceSelectors';
+import { StaticticMarkupType } from 'shared/consts/constants';
+// import { useProductSwitcher } from './hooks/useProductSwitcher';
+// import { dealerPriceSelector } from 'store/dealerPrice/dealerPriceSelectors';
 
 export const ProductPage = () => {
   const product = useSelector(productSelector);
-  const dealerPrice = useSelector(dealerPriceSelector);
+  // const dealerPrice = useSelector(dealerPriceSelector);
   const {
     isMarkupLoading,
     markupDataSource,
@@ -29,8 +29,8 @@ export const ProductPage = () => {
     handleSelectionChange,
   } = useProductPage({ product });
 
-  const { isBeginOfList, isEndOfList, handlePrevious, handleNext } =
-    useProductSwitcher({ product, dealerPrice });
+  // const { isBeginOfList, isEndOfList, handlePrevious, handleNext } =
+  //   useProductSwitcher({ product, dealerPrice });
 
   return (
     <section className="product-page">
@@ -40,7 +40,7 @@ export const ProductPage = () => {
           <ProductCard card={product} />
           <ProductList
             listData={markupDataSource}
-            selectedItem={selectedProductVariant?.product_id}
+            selectedItem={selectedProductVariant?.markup.product_id}
             onSelected={handleSelectionChange}
             isLoading={isMarkupLoading}
           />
@@ -54,8 +54,8 @@ export const ProductPage = () => {
                 className="markup-controls__button"
                 icon={<LeftOutlined />}
                 style={{ margin: 16, width: 200 }}
-                onClick={handlePrevious}
-                disabled={isBeginOfList}
+                // onClick={handlePrevious}
+                // disabled={isBeginOfList}
               >
                 Предыдущий
               </Button>
@@ -66,7 +66,7 @@ export const ProductPage = () => {
                 type="primary"
                 icon={<CheckOutlined />}
                 style={{ margin: 16, width: 100 }}
-                onClick={() => handleMarkup(MarkupType.YES)}
+                onClick={() => handleMarkup(StaticticMarkupType.YES)}
                 disabled={
                   !isMarkable(product.state) ||
                   selectedProductVariant === undefined
@@ -79,14 +79,14 @@ export const ProductPage = () => {
                 type="primary"
                 icon={<CloseOutlined />}
                 style={{ margin: 16, width: 100 }}
-                onClick={() => handleStatistic(MarkupType.NO)}
+                onClick={() => handleStatistic(StaticticMarkupType.NO)}
                 disabled={!isMarkable(product.state)}
               >
                 Нет
               </Button>
               <Button
                 style={{ margin: 16, width: 100 }}
-                onClick={() => handleStatistic(MarkupType.DEFFERED)}
+                onClick={() => handleStatistic(StaticticMarkupType.DEFFERED)}
                 disabled={!isMarkable(product.state)}
               >
                 Отложить
@@ -96,8 +96,8 @@ export const ProductPage = () => {
               className="markup-controls__button"
               icon={<RightOutlined />}
               style={{ margin: 16, width: 200 }}
-              onClick={handleNext}
-              disabled={isEndOfList}
+              // onClick={handleNext}
+              // disabled={isEndOfList}
             >
               Следующий
             </Button>

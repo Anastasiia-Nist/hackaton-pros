@@ -117,6 +117,17 @@ export const useTableDataSource = (): UseTableResult => {
         dealer: item.dealer,
         state: item.state,
         currentIndex: item.currentIndex,
+        productKey: (
+          <span
+            style={{
+              display: 'block',
+              overflowWrap: 'break-word',
+              maxWidth: 200,
+            }}
+          >
+            {item.dealerprice.product_key}
+          </span>
+        ),
       };
     });
   }, [dealerPrice, handleProductClick]);

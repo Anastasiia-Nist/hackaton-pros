@@ -1,16 +1,16 @@
 import type { ColumnType } from 'antd/es/table';
-import { Markup } from 'store/markup/markupSlice';
+import { ProductListType } from '../types/types';
 
-export const columns: ColumnType<Markup>[] = [
+export const columns: ColumnType<ProductListType>[] = [
   {
     title: 'Название',
-    dataIndex: 'product_id',
-    key: 'product_id',
+    dataIndex: 'name',
+    key: 'name',
   },
   {
     title: 'Артикул',
-    dataIndex: 'product_id',
-    key: 'product_id',
+    dataIndex: 'article',
+    key: 'article',
   },
   {
     title: 'Вероятность',
