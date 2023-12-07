@@ -5,7 +5,7 @@ import {
   useGetDealerpriceAllMutation,
   useGetDealerpriceMutation,
 } from 'store/api/dealerPriceApi';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { mainTablePaginationSelector } from 'store/mainTablePagination/mainTablePaginationSelectors';
 import { dealerPriceSelector } from 'store/dealerPrice/dealerPriceSelectors';
@@ -61,8 +61,11 @@ export const useTableDataSource = (): UseTableResult => {
       start_date: filter.dateRange.dateFrom,
       end_date: filter.dateRange.dateTo,
     });
+    // To prevent twice queries to the api. First query appears in handelSetFilter
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getDealerpriceAll, getDealerPrice, currentPage, pageSize, currentDealer]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleProductClick = (product: DealerPriceItem) => {
     dispatch(setProduct(product));
   };
@@ -97,8 +100,8 @@ export const useTableDataSource = (): UseTableResult => {
     });
   };
 
-  return {
-    dataSource: dealerPrice.items.map((item: DealerPriceItem) => {
+  const dataSource = useMemo(() => {
+    return dealerPrice.items.map((item: DealerPriceItem) => {
       return {
         ...item.dealerprice,
         productName: (
@@ -113,8 +116,13 @@ export const useTableDataSource = (): UseTableResult => {
         key: item.dealerprice?.id,
         dealer: item.dealer,
         state: item.state,
+        currentIndex: item.currentIndex,
       };
-    }),
+    });
+  }, [dealerPrice, handleProductClick]);
+
+  return {
+    dataSource,
     handelSetFilter,
     isLoadingAll,
     isLoading,
