@@ -13,6 +13,9 @@ export type DealerPriceItem = {
     dealer_id: number;
     id: number;
   };
+  productdealerkey?: {
+    id: number;
+  };
   state: string;
   currentIndex: number;
 };
@@ -26,6 +29,9 @@ export type DealerPriceItemFlat = {
   date: string;
   dealer_id: number;
   id: number;
+  productdealerkey?: {
+    id: number;
+  };
   state: string;
   currentIndex: number;
 };
