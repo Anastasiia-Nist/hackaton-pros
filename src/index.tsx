@@ -1,4 +1,3 @@
-import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -10,13 +9,11 @@ import { ConfigProvider } from 'antd';
 import locale from 'antd/lib/locale/ru_RU';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <ConfigProvider locale={locale}>
-          <App />
-        </ConfigProvider>
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>,
+  <BrowserRouter>
+    <Provider store={store}>
+      <ConfigProvider locale={locale}>
+        <App />
+      </ConfigProvider>
+    </Provider>
+  </BrowserRouter>,
 );

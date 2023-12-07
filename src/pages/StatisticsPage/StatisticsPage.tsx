@@ -5,7 +5,7 @@ import { useGetDealerpriceAllMutation } from 'store/api/dealerPriceApi';
 import { Tabs, Spin } from 'antd';
 import { TabsProps } from 'antd/lib';
 import { LoadingOutlined } from '@ant-design/icons';
-import { useMemo, useEffect, useState } from 'react';
+import { useMemo, useEffect, useState, useCallback } from 'react';
 
 export const StatisticsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,13 +19,13 @@ export const StatisticsPage = () => {
     def: 0,
   });
 
-  const getData = async () => {
+  const getData = useCallback(async () => {
     await getDealerpriceAll({ page: 1, size: 100 });
     for (let i = 2; i <= 30; i++) {
       await getDealerpriceAll({ page: i, size: 100 });
     }
     setIsLoading(false);
-  };
+  }, [getDealerpriceAll]);
 
   useEffect(() => {
     if (data) {
@@ -33,7 +33,7 @@ export const StatisticsPage = () => {
         all:
           data.items.filter((i) => {
             return (
-              i.state === 'да' || i.state === 'нет' || i.state === 'отложено'
+              i.state === 'да' || i.state === 'нет' || i.state === 'отложить'
             );
           }).length + prev.all,
         null:
@@ -50,7 +50,7 @@ export const StatisticsPage = () => {
           }).length + prev.no,
         def:
           data.items.filter((i) => {
-            return i.state === 'отложено';
+            return i.state === 'отложить';
           }).length + prev.def,
       }));
     }
@@ -59,9 +59,13 @@ export const StatisticsPage = () => {
   useEffect(() => {
     setIsLoading(true);
     getData();
-  }, [getDealerpriceAll]);
+  }, [getData, getDealerpriceAll]);
 
   const averageQueue = useMemo(() => {
+    if (currentSession.queueVariants.at(0) === undefined) {
+      return '-';
+    }
+
     const sum = currentSession.queueVariants.reduce(
       (acc, item) => acc + item,
       0,

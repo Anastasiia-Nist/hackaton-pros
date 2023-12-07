@@ -10,7 +10,10 @@ import { setProduct } from 'store/product/productSlice';
 import { useShowMessage } from 'shared/hooks/useShowMessage';
 import { DealerPriceItem } from 'store/dealerPrice/dealerPriceSlice';
 import { isMarkable, prepareMarkup, prepareStatistics } from '../utils/utils';
-import { StaticticMarkupType } from 'shared/consts/constants';
+import {
+  StaticticMarkupType,
+  StatisticToProductState,
+} from 'shared/consts/constants';
 import { setCurrentSession } from 'store/currentSession/currentSessionSlice';
 import { currentSessionSelector } from 'store/currentSession/currentSessionSelectors';
 import { useSelector } from 'react-redux';
@@ -21,6 +24,7 @@ type UseProductPageProps = {
 };
 
 export const useProductPage = ({ product }: UseProductPageProps) => {
+  const [isSuccessable, setIsSuccessable] = useState(false);
   const [selectedProductVariant, setSelectedProductVariant] = useState<
     Markup | undefined
   >(undefined);
@@ -139,6 +143,7 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
 
   const handleMarkup = useCallback(
     async (markupType: string) => {
+      await deleteMarkup({ productdealerkey_id: product.dealerprice.id });
       await handlePostMarkup(product);
       await handlePostStatistic(
         markupType,
@@ -148,17 +153,18 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
       dispatch(setProduct({ ...product, state: markupType }));
     },
     [
-      handlePostMarkup,
+      deleteMarkup,
       product,
+      handlePostMarkup,
       handlePostStatistic,
-      selectedProductVariant,
+      selectedProductVariant?.markup.id,
       dispatch,
     ],
   );
 
   const handleStatistic = useCallback(
     async (markupType: string) => {
-      if (markupType !== StaticticMarkupType.YES) {
+      if (product.state === StatisticToProductState[StaticticMarkupType.YES]) {
         await deleteMarkup({ productdealerkey_id: product.dealerprice.id });
       }
       await handlePostStatistic(
@@ -179,7 +185,7 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
   );
 
   const handleDeffer = async () => {
-    if (product.state === StaticticMarkupType.YES) {
+    if (product.state === StatisticToProductState[StaticticMarkupType.YES]) {
       await deleteMarkup({ productdealerkey_id: product.dealerprice.id });
     }
     await handlePostStatistic(
@@ -192,7 +198,10 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
   };
 
   const handleSelectionChange = async (value: number) => {
-    if (value === selectedProductVariant?.markup.product_id) {
+    if (
+      value === selectedProductVariant?.markup.product_id &&
+      product.state === StatisticToProductState[StaticticMarkupType.YES]
+    ) {
       try {
         await handleDeffer();
         return;
@@ -202,17 +211,31 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
       }
     }
 
-    const markup = markupData?.items.find(
-      (item) => item.markup.product_id === value,
-    );
+    if (value !== selectedProductVariant?.markup.product_id) {
+      const markup = markupData?.items.find(
+        (item) => item.markup.product_id === value,
+      );
 
-    setSelectedProductVariant(markup);
+      setSelectedProductVariant(markup);
+    } else {
+      setSelectedProductVariant(undefined);
+    }
 
-    if (product.state === StaticticMarkupType.YES) {
+    if (product.state === StatisticToProductState[StaticticMarkupType.YES]) {
       await deleteMarkup({ productdealerkey_id: product.dealerprice.id });
       await handleMarkup(product.state);
     }
   };
+
+  useEffect(() => {
+    if (
+      selectedProductVariant?.markup.id === product.marked_product?.markup.id
+    ) {
+      setIsSuccessable(false);
+      return;
+    }
+    setIsSuccessable(true);
+  }, [product.marked_product?.markup.id, selectedProductVariant]);
 
   return {
     product,
@@ -220,6 +243,7 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
     markupDataSource,
     contextHolder,
     selectedProductVariant,
+    isSuccessable,
     handleMarkup,
     handleStatistic,
     handleSelectionChange,

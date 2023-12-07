@@ -24,6 +24,7 @@ export const ProductPage = () => {
     markupDataSource,
     contextHolder,
     selectedProductVariant,
+    isSuccessable,
     handleMarkup,
     handleStatistic,
     handleSelectionChange,
@@ -69,7 +70,8 @@ export const ProductPage = () => {
                 onClick={() => handleMarkup(StaticticMarkupType.YES)}
                 disabled={
                   !isMarkable(product.state) ||
-                  selectedProductVariant === undefined
+                  selectedProductVariant === undefined ||
+                  !isSuccessable
                 }
               >
                 Да

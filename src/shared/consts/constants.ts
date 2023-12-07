@@ -16,6 +16,12 @@ export enum StaticticMarkupType {
   DEFFERED = 'отложить',
 }
 
+export const StatisticToProductState = {
+  [StaticticMarkupType.YES]: MarkupType.YES,
+  [StaticticMarkupType.NO]: MarkupType.NO,
+  [StaticticMarkupType.DEFFERED]: MarkupType.DEFFERED,
+};
+
 export const MarkupTypeText = {
   [MarkupType.YES]: 'Размечено',
   [MarkupType.NO]: 'Нет совпадений',
