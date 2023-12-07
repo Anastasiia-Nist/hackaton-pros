@@ -6,6 +6,7 @@ export const columns: ColumnType<ProductListType>[] = [
     title: 'Название',
     dataIndex: 'name',
     key: 'name',
+    width: '68%',
   },
   {
     title: 'Артикул',
