@@ -113,7 +113,8 @@ export const useTableDataSource = (): UseTableResult => {
           </Link>
         ),
         markedStatus: <MarkedStatus state={item.state} />,
-        key: item.dealerprice?.id,
+        // To prevent antd table update issue. If key the same, antd table will not update
+        key: (Math.random() + 1).toString(36).substring(7),
         dealer: item.dealer,
         state: item.state,
         currentIndex: item.currentIndex,
