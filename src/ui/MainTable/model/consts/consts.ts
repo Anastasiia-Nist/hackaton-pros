@@ -21,7 +21,7 @@ export const columns: ColumnType<MainTableDataType>[] = [
   },
   {
     title: 'Артикул',
-    dataIndex: 'product_key',
+    dataIndex: 'productKey',
   },
   {
     title: 'Цена',

@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { MarkupType } from 'shared/consts/constants';
 import { DealerPriceItem } from 'store/dealerPrice/dealerPriceSlice';
 
@@ -30,7 +31,7 @@ export const prepareStatistics = (
   return {
     key: currentProduct.dealerprice.id,
     markup: selectedProductVariant,
-    last_update: new Date().toISOString(),
+    last_update: dayjs().format('YYYY-MM-DD HH:mm:ss'),
     state: markupType,
   };
 };

@@ -1,6 +1,7 @@
 import { DealerPriceItemFlat } from 'store/dealerPrice/dealerPriceSlice';
 
-export type MainTableDataType = {
+export type MainTableDataType = DealerPriceItemFlat & {
   productName: JSX.Element;
   markedStatus: JSX.Element;
-} & DealerPriceItemFlat;
+  productKey: JSX.Element;
+};

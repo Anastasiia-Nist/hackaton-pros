@@ -10,6 +10,12 @@ export enum MarkupType {
   ALL = 'ALL',
 }
 
+export enum StaticticMarkupType {
+  YES = 'да',
+  NO = 'нет',
+  DEFFERED = 'отложить',
+}
+
 export const MarkupTypeText = {
   [MarkupType.YES]: 'Размечено',
   [MarkupType.NO]: 'Нет совпадений',

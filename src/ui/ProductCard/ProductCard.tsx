@@ -8,6 +8,7 @@ type ProductCardProps = {
 };
 
 export const ProductCard = ({ card }: ProductCardProps) => {
+  console.log(card);
   return (
     <Space direction="vertical">
       <Card
