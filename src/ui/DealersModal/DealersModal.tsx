@@ -99,7 +99,7 @@ export const DealersModal = ({ isOpen, handleClose }: DealersModalProps) => {
       >
         <Table
           loading={isLoading}
-          scroll={{ y: 600 }}
+          scroll={{ y: 400 }}
           className="dealers-modal__table"
           columns={columns}
           dataSource={dataSource}

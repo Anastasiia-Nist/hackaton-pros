@@ -38,7 +38,7 @@ export const ProductCard = ({ card }: ProductCardProps) => {
           </p>
         </div>
         <div className="card__img">
-          <img src="http://placehold.it/140" />
+          <img src="http://placehold.it/120" />
         </div>
       </Card>
     </Space>
