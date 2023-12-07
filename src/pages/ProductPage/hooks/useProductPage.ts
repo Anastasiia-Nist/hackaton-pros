@@ -168,7 +168,7 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
       dispatch,
     ],
   );
-  console.log(product);
+
   const handleStatistic = useCallback(
     async (markupType: string) => {
       console.log(product);

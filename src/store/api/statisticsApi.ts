@@ -1,6 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from 'shared/consts/constants';
-import { Staistics, setStatistics } from 'store/statistics/statisticsSlice';
+import {
+  Staistics,
+  TotalStaistics,
+  setStatistics,
+} from 'store/statistics/statisticsSlice';
 
 export const statisticsApi = createApi({
   reducerPath: 'statisticsApi',
@@ -13,7 +17,7 @@ export const statisticsApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getStatistics: builder.mutation<Array<Staistics>, void>({
+    getStatistics: builder.mutation<Array<TotalStaistics>, void>({
       query() {
         return {
           url: 'api/v1/statistic/',

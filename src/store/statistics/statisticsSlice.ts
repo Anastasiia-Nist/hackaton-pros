@@ -7,7 +7,14 @@ export type Staistics = {
   state: string;
 };
 
-const initialState: Array<Staistics> = [];
+export type TotalStaistics = {
+  yes: number;
+  no: number;
+  hold: number;
+  total: number;
+};
+
+const initialState: Array<Staistics | TotalStaistics> = [];
 
 const statisticsSlice = createSlice({
   name: 'statistics',
