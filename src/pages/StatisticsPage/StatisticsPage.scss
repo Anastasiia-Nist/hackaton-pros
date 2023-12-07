@@ -18,7 +18,7 @@
     color: $color-main-darker;
   }
 
-  &__current-session {
+  &__current-session, &__general-session {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 20px;
