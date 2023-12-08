@@ -6,7 +6,7 @@ Web App for the hackaton.
 
 ### Stack
 
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![TypeScript](https://img.shields.io/badge/typescript-3178c6.svg?style=for-the-badge&logo=typescript&logoColor=fff) ![Redux](https://img.shields.io/badge/redux-52357f.svg?style=for-the-badge&logo=redux&logoColor=white) ![Redux Toolkit](https://img.shields.io/badge/Redux%20Toolkit-52357f.svg?style=for-the-badge&logo=redux&logoColor=white) ![RTK Query](https://img.shields.io/badge/rtk%20query-52357f.svg?style=for-the-badge&logo=redux&logoColor=white) ![SCSS](https://img.shields.io/badge/scss-cc6699.svg?style=for-the-badge&logo=sass&logoColor=white) ![BEM](https://img.shields.io/badge/bem-555555.svg?style=for-the-badge&logo=bem&logoColor=ddd) 
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![TypeScript](https://img.shields.io/badge/typescript-3178c6.svg?style=for-the-badge&logo=typescript&logoColor=fff) ![Redux](https://img.shields.io/badge/redux-52357f.svg?style=for-the-badge&logo=redux&logoColor=white) ![Redux Toolkit](https://img.shields.io/badge/Redux%20Toolkit-52357f.svg?style=for-the-badge&logo=redux&logoColor=white) ![RTK Query](https://img.shields.io/badge/rtk%20query-52357f.svg?style=for-the-badge&logo=redux&logoColor=white) ![SCSS](https://img.shields.io/badge/scss-cc6699.svg?style=for-the-badge&logo=sass&logoColor=white) ![BEM](https://img.shields.io/badge/bem-555555.svg?style=for-the-badge&logo=bem&logoColor=ddd)
 
 ### Tools
 
@@ -26,11 +26,13 @@ npm ci
 npm run build
 npm run start
 ```
-Then open ```http://localhost:4173/``` in browser
+
+Then open `http://localhost:4173/` in browser
 
 #### Run in dev mode
 
 ```BASH
 npm run dev
 ```
-Then open ```http://localhost:5174/``` in browser
+
+Then open `http://localhost:5174/` in browser
