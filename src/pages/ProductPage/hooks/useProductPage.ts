@@ -171,7 +171,6 @@ export const useProductPage = ({ product }: UseProductPageProps) => {
 
   const handleStatistic = useCallback(
     async (markupType: string) => {
-      console.log(product);
       if (
         product.state === StaticticMarkupType.YES &&
         product.productdealerkey?.id

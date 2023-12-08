@@ -5,7 +5,7 @@ import {
   useGetDealerpriceAllMutation,
   useGetDealerpriceMutation,
 } from 'store/api/dealerPriceApi';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { mainTablePaginationSelector } from 'store/mainTablePagination/mainTablePaginationSelectors';
 import { dealerPriceSelector } from 'store/dealerPrice/dealerPriceSelectors';
@@ -65,10 +65,12 @@ export const useTableDataSource = (): UseTableResult => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getDealerpriceAll, getDealerPrice, currentPage, pageSize, currentDealer]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleProductClick = (product: DealerPriceItem) => {
-    dispatch(setProduct(product));
-  };
+  const handleProductClick = useCallback(
+    (product: DealerPriceItem) => {
+      dispatch(setProduct(product));
+    },
+    [dispatch],
+  );
 
   const handelSetFilter = async ({
     name,

@@ -12,6 +12,11 @@
     padding: 40px;
   }
 
+  &__spinner {
+    margin: 100px auto;
+    display: block;
+  }
+
   &__title {
     @include accent-title-typography;
     margin-bottom: 20px;
