@@ -10,6 +10,7 @@ type MainTableProps = {
 export const MainTable = ({ dataSource, isLoading }: MainTableProps) => {
   return (
     <Table
+      className="main-table"
       columns={columns}
       loading={isLoading}
       dataSource={[...dataSource]}

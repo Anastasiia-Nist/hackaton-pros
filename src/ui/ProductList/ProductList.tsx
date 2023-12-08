@@ -21,6 +21,7 @@ export const ProductList = ({
     <>
       <Divider orientation="left">Список возможных совпадений</Divider>
       <Table
+        className="product-list"
         loading={isLoading}
         dataSource={listData}
         columns={columns}
