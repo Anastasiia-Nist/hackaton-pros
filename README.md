@@ -3,6 +3,13 @@
 Web App for the hackaton.
 
 [Demo version](https://hackaton-pros.vercel.app/)
+<br />
+[Product version](http://81.31.246.17/)
+
+### Team
+
+[Anastasia Nistratova](https://github.com/Anastasiia-Nist)
+[Sergey Berdnikov](https://github.com/sergasent)
 
 ### Stack
 
@@ -11,6 +18,12 @@ Web App for the hackaton.
 ### Tools
 
 ![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white) ![VITE](https://img.shields.io/badge/VITE-817ffd?style=for-the-badge&logo=vite&logoColor=fff)
+
+### Libs & assets
+
+[Ant Design](https://ant.design/)
+<br />
+[DIN Pro font](https://bestfonts.pro/font/din-pro)
 
 ### Setup
 
